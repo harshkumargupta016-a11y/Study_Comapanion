@@ -6,12 +6,11 @@ import { useMasteryStore } from '@/store/masteryStore';
 import { useSessionStore } from '@/store/sessionStore';
 import { MOCK_QUESTIONS, MOCK_CONCEPTS } from '@/lib/mock/data';
 import { updateBKT, selectNextQuestion } from '@/lib/bkt';
-import { CheckCircle2, AlertCircle, ArrowRight, Brain, User, Sparkles } from 'lucide-react';
+import { ArrowRight, Brain, Sparkles } from 'lucide-react';
 
 export default function OnboardingPage() {
   const router = useRouter();
   const { masteryPoints, setMasteryPoints } = useMasteryStore();
-  const { learnerAbility, setLearnerAbility } = useSessionStore();
 
   const [step, setStep] = useState<'intake' | 'quiz' | 'complete'>('intake');
   const [goal, setGoal] = useState('Pass final exam with top grade');
@@ -24,8 +23,7 @@ export default function OnboardingPage() {
   const [scoreCount, setScoreCount] = useState(0);
 
   const startQuiz = () => {
-    // Initialize initial mastery points
-    const initialPoints = MOCK_CONCEPTS.map((c, i) => ({
+    const initialPoints = MOCK_CONCEPTS.map((c) => ({
       conceptId: c.id,
       conceptName: c.name,
       pKnown: level === 'beginner' ? 0.2 : level === 'intermediate' ? 0.4 : 0.6,
@@ -49,7 +47,6 @@ export default function OnboardingPage() {
 
     if (isCorrect) setScoreCount((prev) => prev + 1);
 
-    // Update BKT in store
     setMasteryPoints(
       masteryPoints.map((m) => {
         if (m.conceptId === currentQuestion.conceptId) {
@@ -75,58 +72,58 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 py-6">
-      <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-2 rounded-full bg-teal/10 px-3 py-1 text-xs font-bold text-teal">
-          <Brain className="w-4 h-4" /> Diagnostic Onboarding
+    <div className="max-w-2xl mx-auto space-y-6 py-4">
+      <div className="text-center space-y-1.5">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo/10 border border-indigo/20 text-xs font-semibold text-indigo">
+          <Brain className="w-3.5 h-3.5" /> Diagnostic Assessment Onboarding
         </div>
-        <h1 className="font-head text-3xl font-bold text-deep dark:text-teal">
-          Personalized Learner Assessment
+        <h1 className="text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+          Personalized Knowledge Trace Calibration
         </h1>
-        <p className="text-sm text-mut">
-          Calibrating the Bayesian Knowledge Tracing (BKT) engine for Operating Systems.
+        <p className="text-xs sm:text-sm text-mut">
+          Calibrating Bayesian Knowledge Tracing (BKT) probability matrix P(L) for Operating Systems.
         </p>
       </div>
 
       {step === 'intake' && (
-        <div className="bg-bg rounded-2xl border border-line p-6 space-y-6 shadow-sm">
-          <h2 className="font-head text-xl font-bold border-b border-line pb-3">
+        <div className="card-subtle rounded-2xl p-6 sm:p-8 space-y-5 bg-card">
+          <h2 className="text-base font-bold text-ink border-b border-line pb-3">
             1. Student Intake Preferences
           </h2>
 
-          <div className="space-y-4">
+          <div className="space-y-4 text-xs sm:text-sm">
             <div>
-              <label className="block text-sm font-semibold mb-1">Primary Academic Goal</label>
+              <label className="block font-medium text-mut mb-1">Primary Goal</label>
               <input
                 type="text"
                 value={goal}
                 onChange={(e) => setGoal(e.target.value)}
-                className="w-full p-3 rounded-xl border border-line bg-bg2 text-sm focus:outline-none focus:ring-2 focus:ring-teal"
+                className="w-full p-2.5 rounded-lg border border-line bg-bg2 text-ink focus:outline-none focus:ring-2 focus:ring-indigo/20"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold mb-1">Target Exam Date</label>
+              <label className="block font-medium text-mut mb-1">Target Exam Date</label>
               <input
                 type="date"
                 value={examDate}
                 onChange={(e) => setExamDate(e.target.value)}
-                className="w-full p-3 rounded-xl border border-line bg-bg2 text-sm focus:outline-none focus:ring-2 focus:ring-teal"
+                className="w-full p-2.5 rounded-lg border border-line bg-bg2 text-ink focus:outline-none focus:ring-2 focus:ring-indigo/20"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold mb-2">Self-Rated Prior Familiarity</label>
-              <div className="grid grid-cols-3 gap-3">
+              <label className="block font-medium text-mut mb-2">Self-Rated Prior Familiarity</label>
+              <div className="grid grid-cols-3 gap-2">
                 {(['beginner', 'intermediate', 'advanced'] as const).map((lvl) => (
                   <button
                     key={lvl}
                     type="button"
                     onClick={() => setLevel(lvl)}
-                    className={`p-3 rounded-xl border font-bold capitalize text-sm transition ${
+                    className={`p-2.5 rounded-lg border text-xs font-semibold capitalize transition-all ${
                       level === lvl
-                        ? 'bg-teal text-white border-teal'
-                        : 'bg-bg2 border-line text-mut hover:bg-line'
+                        ? 'btn-indigo shadow-sm'
+                        : 'bg-bg2 border-line text-mut hover:text-ink'
                     }`}
                   >
                     {lvl}
@@ -138,7 +135,7 @@ export default function OnboardingPage() {
 
           <button
             onClick={startQuiz}
-            className="w-full py-3.5 rounded-full bg-teal text-white font-bold flex items-center justify-center gap-2 hover:bg-teal/90 transition shadow-md"
+            className="w-full py-3 rounded-lg btn-indigo font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm"
           >
             Start Diagnostic Assessment <ArrowRight className="w-4 h-4" />
           </button>
@@ -146,18 +143,18 @@ export default function OnboardingPage() {
       )}
 
       {step === 'quiz' && currentQuestion && (
-        <div className="bg-bg rounded-2xl border border-line p-6 space-y-6 shadow-sm">
+        <div className="card-subtle rounded-2xl p-6 space-y-6 bg-card">
           <div className="flex items-center justify-between border-b border-line pb-3">
-            <span className="text-xs font-bold text-amber uppercase tracking-wider">
-              Diagnostic Question {answeredIds.size + 1} of 6
+            <span className="text-xs font-mono font-bold text-amber">
+              Question {answeredIds.size + 1} of 6
             </span>
-            <span className="text-xs font-bold text-teal bg-teal/10 px-2.5 py-1 rounded-full">
+            <span className="text-[11px] font-bold text-indigo bg-indigo/10 px-2.5 py-0.5 rounded-full border border-indigo/20">
               Target Difficulty: {currentQuestion.difficulty}
             </span>
           </div>
 
-          <div className="space-y-4">
-            <h2 className="font-head text-lg font-bold">{currentQuestion.stem}</h2>
+          <div className="space-y-4 text-xs sm:text-sm">
+            <h2 className="font-bold text-ink text-base">{currentQuestion.stem}</h2>
 
             {currentQuestion.type === 'mcq' && currentQuestion.options ? (
               <div className="space-y-2">
@@ -166,10 +163,10 @@ export default function OnboardingPage() {
                     key={idx}
                     type="button"
                     onClick={() => setSelectedOption(String(idx))}
-                    className={`w-full p-3.5 text-left rounded-xl border text-sm font-semibold transition ${
+                    className={`w-full p-3.5 text-left rounded-xl border text-xs sm:text-sm font-medium transition-all ${
                       selectedOption === String(idx)
-                        ? 'bg-teal/10 border-teal text-teal'
-                        : 'bg-bg2 border-line text-ink hover:bg-line'
+                        ? 'bg-indigo/10 border-indigo text-indigo font-semibold'
+                        : 'bg-bg2 border-line text-ink hover:bg-card'
                     }`}
                   >
                     {opt}
@@ -182,7 +179,7 @@ export default function OnboardingPage() {
                 placeholder="Type your exact answer..."
                 value={selectedOption || ''}
                 onChange={(e) => setSelectedOption(e.target.value)}
-                className="w-full p-3.5 rounded-xl border border-line bg-bg2 text-sm focus:outline-none focus:ring-2 focus:ring-teal"
+                className="w-full p-3 rounded-xl border border-line bg-bg2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo/20 text-ink"
               />
             )}
           </div>
@@ -190,7 +187,7 @@ export default function OnboardingPage() {
           <button
             onClick={handleAnswerSubmit}
             disabled={!selectedOption}
-            className="w-full py-3.5 rounded-full bg-teal text-white font-bold flex items-center justify-center gap-2 hover:bg-teal/90 transition disabled:opacity-50"
+            className="w-full py-2.5 rounded-lg btn-indigo font-semibold text-xs flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
           >
             Submit Answer <ArrowRight className="w-4 h-4" />
           </button>
@@ -198,29 +195,20 @@ export default function OnboardingPage() {
       )}
 
       {step === 'complete' && (
-        <div className="bg-bg rounded-2xl border border-line p-8 text-center space-y-6 shadow-sm">
-          <div className="w-16 h-16 rounded-full bg-teal/10 flex items-center justify-center text-teal mx-auto">
-            <Sparkles className="w-8 h-8" />
+        <div className="card-subtle rounded-2xl p-8 text-center space-y-6 bg-card">
+          <div className="w-12 h-12 rounded-xl bg-indigo/10 flex items-center justify-center text-indigo mx-auto">
+            <Sparkles className="w-6 h-6" />
           </div>
-          <h2 className="font-head text-2xl font-bold text-deep dark:text-teal">
-            Diagnostic Complete!
+          <h2 className="text-xl font-bold text-ink tracking-tight">
+            Diagnostic Calibration Complete!
           </h2>
-          <p className="text-sm text-mut max-w-md mx-auto">
-            You scored {scoreCount} / 6. Your initial concept probability matrix $P(L)$ has been stored in Zustand.
+          <p className="text-xs text-mut max-w-md mx-auto">
+            You scored {scoreCount} / 6. Your initial concept probability matrix P(L) has been stored in Zustand.
           </p>
-
-          <div className="grid grid-cols-2 gap-3 max-w-md mx-auto text-left">
-            {masteryPoints.slice(0, 4).map((mp) => (
-              <div key={mp.conceptId} className="p-3 bg-bg2 rounded-xl border border-line">
-                <div className="text-xs font-bold text-mut">{mp.conceptName}</div>
-                <div className="text-lg font-bold text-teal">{Math.round(mp.pKnown * 100)}%</div>
-              </div>
-            ))}
-          </div>
 
           <button
             onClick={() => router.push('/kb')}
-            className="w-full py-3.5 rounded-full bg-teal text-white font-bold flex items-center justify-center gap-2 hover:bg-teal/90 transition shadow-md"
+            className="w-full py-3 rounded-lg btn-indigo font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm"
           >
             Explore Knowledge Map <ArrowRight className="w-4 h-4" />
           </button>

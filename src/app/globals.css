@@ -2,43 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg: #ffffff;
-  --bg2: #eef3f3;
-  --ink: #13202a;
-  --mut: #56656f;
-  --deep: #0e3b43;
-  --teal: #0f766e;
-  --coral: #e4572e;
-  --amber: #f2a81d;
-  --line: #d5e0e0;
-  color-scheme: light;
-}
+@layer base {
+  :root {
+    --bg: #F8FAFC;
+    --bg2: #F1F5F9;
+    --card: #FFFFFF;
+    --ink: #111827;
+    --mut: #64748B;
+    --deep: #0F172A;
+    --indigo: #635BFF;
+    --teal: #14B8A6;
+    --coral: #F43F5E;
+    --amber: #F59E0B;
+    --line: #E2E8F0;
+    --ring: rgba(99, 91, 255, 0.25);
+    color-scheme: light;
+  }
 
-[data-theme="dark"] {
-  --bg: #0b1a1f;
-  --bg2: #12272d;
-  --ink: #e8f0f0;
-  --mut: #9fb3b8;
-  --deep: #06242a;
-  --teal: #14907f;
-  --coral: #e4572e;
-  --amber: #f2a81d;
-  --line: #23393f;
-  color-scheme: dark;
+  [data-theme="dark"] {
+    --bg: #0B0F17;
+    --bg2: #111827;
+    --card: #1E293B;
+    --ink: #F8FAFC;
+    --mut: #94A3B8;
+    --deep: #020617;
+    --indigo: #818CF8;
+    --teal: #2DD4BF;
+    --coral: #FB7185;
+    --amber: #FBBF24;
+    --line: #334155;
+    --ring: rgba(129, 140, 248, 0.25);
+    color-scheme: dark;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b1a1f;
-    --bg2: #12272d;
-    --ink: #e8f0f0;
-    --mut: #9fb3b8;
-    --deep: #06242a;
-    --teal: #14907f;
-    --coral: #e4572e;
-    --amber: #f2a81d;
-    --line: #23393f;
+    --bg: #0B0F17;
+    --bg2: #111827;
+    --card: #1E293B;
+    --ink: #F8FAFC;
+    --mut: #94A3B8;
+    --deep: #020617;
+    --indigo: #818CF8;
+    --teal: #2DD4BF;
+    --coral: #FB7185;
+    --amber: #FBBF24;
+    --line: #334155;
+    --ring: rgba(129, 140, 248, 0.25);
     color-scheme: dark;
   }
 }
@@ -46,6 +57,39 @@
 body {
   background-color: var(--bg);
   color: var(--ink);
-  font-family: 'Calibri', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+/* Custom UI Utilities */
+.glass-panel {
+  background-color: color-mix(in srgb, var(--card) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.btn-indigo {
+  background-color: var(--indigo);
+  color: #ffffff;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-indigo:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--indigo) 40%, transparent);
+}
+
+.card-subtle {
+  background-color: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-subtle:hover {
+  border-color: color-mix(in srgb, var(--indigo) 50%, var(--line));
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
 }

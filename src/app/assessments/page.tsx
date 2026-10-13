@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useMasteryStore } from '@/store/masteryStore';
-import { useSessionStore } from '@/store/sessionStore';
 import { getAssessments, submitAssessment } from '@/lib/api';
 import { Question, Citation } from '@/lib/schemas';
 import { updateBKT, selectNextQuestion } from '@/lib/bkt';
@@ -14,24 +13,19 @@ import {
   ArrowRight,
   Brain,
   RotateCcw,
-  Sparkles,
   Award,
-  AlertTriangle,
+  AlertTriangle
 } from 'lucide-react';
 
 export default function AssessmentsPage() {
   const { masteryPoints, setMasteryPoints } = useMasteryStore();
-  const { learnerAbility, setLearnerAbility } = useSessionStore();
 
   const [allQuestions, setAllQuestions] = useState<Question[]>([]);
   const [mode, setMode] = useState<'builder' | 'runner' | 'report'>('builder');
 
-  // Builder Config
   const [questionCount, setQuestionCount] = useState(5);
   const [examType, setExamType] = useState<'quiz' | 'exam'>('quiz');
-  const [selectedConcepts, setSelectedConcepts] = useState<string[]>([]);
 
-  // Runner State
   const [answeredIds, setAnsweredIds] = useState<Set<string>>(new Set());
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -41,10 +35,8 @@ export default function AssessmentsPage() {
     misconception?: string;
   } | null>(null);
 
-  // Active Source Viewer
   const [activeCitation, setActiveCitation] = useState<Citation | null>(null);
 
-  // Results tracking
   const [results, setResults] = useState<
     Array<{
       question: Question;
@@ -78,7 +70,6 @@ export default function AssessmentsPage() {
 
     const res = await submitAssessment(currentQuestion.id, selectedAnswer);
 
-    // Update BKT Mastery Store
     setMasteryPoints(
       masteryPoints.map((m) => {
         if (m.conceptId === currentQuestion.conceptId) {
@@ -134,54 +125,54 @@ export default function AssessmentsPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 py-6">
+    <div className="max-w-5xl mx-auto space-y-6 py-4">
       {/* 1. BUILDER MODE */}
       {mode === 'builder' && (
-        <div className="bg-bg border border-line rounded-3xl p-8 space-y-6 shadow-sm">
+        <div className="card-subtle rounded-2xl p-6 sm:p-8 space-y-6 bg-card">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-teal/10 px-3 py-1 text-xs font-bold text-teal mb-2">
-              <Brain className="w-4 h-4" /> Adaptive Assessment Engine
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo/10 text-indigo text-xs font-semibold mb-2">
+              <Brain className="w-3.5 h-3.5" /> Adaptive Assessment Engine
             </div>
-            <h1 className="font-head text-3xl font-bold text-deep dark:text-teal">
+            <h1 className="text-2xl sm:text-3xl font-bold text-ink tracking-tight">
               Configure Adaptive Quiz
             </h1>
-            <p className="text-sm text-mut mt-1">
-              Select assessment mode and question count. Target question difficulty auto-adjusts based on Bayesian Knowledge Tracing.
+            <p className="text-xs sm:text-sm text-mut mt-1">
+              Select assessment mode and question count. Question target difficulty auto-adjusts based on Bayesian Knowledge Tracing.
             </p>
           </div>
 
           <div className="space-y-4 pt-4 border-t border-line">
             <div>
-              <label className="block text-sm font-semibold mb-2">Assessment Mode</label>
-              <div className="grid grid-cols-2 gap-4">
+              <label className="block text-xs font-bold text-mut uppercase tracking-wider mb-2">Assessment Mode</label>
+              <div className="grid sm:grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setExamType('quiz')}
-                  className={`p-4 rounded-2xl border text-left transition ${
+                  className={`p-4 rounded-xl border text-left transition-all ${
                     examType === 'quiz'
-                      ? 'bg-teal/10 border-teal text-teal font-bold'
-                      : 'bg-bg2 border-line text-mut hover:bg-line'
+                      ? 'bg-indigo/10 border-indigo text-indigo font-bold'
+                      : 'bg-bg2 border-line text-mut hover:text-ink'
                   }`}
                 >
-                  <div className="text-base">Interactive Adaptive Quiz</div>
-                  <div className="text-xs font-normal opacity-80 mt-1">
-                    Immediate cited feedback &amp; source viewer after every response.
+                  <div className="text-sm">Interactive Adaptive Quiz</div>
+                  <div className="text-xs font-normal opacity-80 mt-0.5">
+                    Immediate cited feedback &amp; source inspector after every response.
                   </div>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setExamType('exam')}
-                  className={`p-4 rounded-2xl border text-left transition ${
+                  className={`p-4 rounded-xl border text-left transition-all ${
                     examType === 'exam'
-                      ? 'bg-teal/10 border-teal text-teal font-bold'
-                      : 'bg-bg2 border-line text-mut hover:bg-line'
+                      ? 'bg-indigo/10 border-indigo text-indigo font-bold'
+                      : 'bg-bg2 border-line text-mut hover:text-ink'
                   }`}
                 >
-                  <div className="text-base flex items-center gap-2">
-                    Timed Mock Exam <Clock className="w-4 h-4 text-coral" />
+                  <div className="text-sm flex items-center gap-1.5">
+                    Timed Mock Exam <Clock className="w-3.5 h-3.5 text-coral" />
                   </div>
-                  <div className="text-xs font-normal opacity-80 mt-1">
+                  <div className="text-xs font-normal opacity-80 mt-0.5">
                     Simulates exam conditions. Feedback revealed in final diagnostic report.
                   </div>
                 </button>
@@ -189,16 +180,16 @@ export default function AssessmentsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold mb-2">Target Question Count</label>
-              <div className="flex gap-3">
+              <label className="block text-xs font-bold text-mut uppercase tracking-wider mb-2">Target Question Count</label>
+              <div className="flex gap-2">
                 {[5, 10, 15].map((cnt) => (
                   <button
                     key={cnt}
                     onClick={() => setQuestionCount(cnt)}
-                    className={`px-6 py-2.5 rounded-xl border text-sm font-bold transition ${
+                    className={`px-5 py-2 rounded-lg border text-xs font-semibold transition-all ${
                       questionCount === cnt
-                        ? 'bg-teal text-white border-teal'
-                        : 'bg-bg2 border-line text-mut hover:bg-line'
+                        ? 'bg-indigo text-white border-indigo'
+                        : 'bg-bg2 border-line text-mut hover:text-ink'
                     }`}
                   >
                     {cnt} Questions
@@ -210,9 +201,9 @@ export default function AssessmentsPage() {
 
           <button
             onClick={handleStartQuiz}
-            className="w-full py-4 rounded-full bg-teal text-white font-bold flex items-center justify-center gap-2 hover:bg-teal/90 transition shadow-md text-base"
+            className="w-full py-3 rounded-lg btn-indigo font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm"
           >
-            Start Adaptive Quiz <ArrowRight className="w-5 h-5" />
+            Start Adaptive Quiz <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -220,18 +211,18 @@ export default function AssessmentsPage() {
       {/* 2. RUNNER MODE */}
       {mode === 'runner' && currentQuestion && (
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="md:col-span-2 bg-bg border border-line rounded-3xl p-6 space-y-6 shadow-sm">
+          <div className="md:col-span-2 card-subtle rounded-2xl p-6 space-y-6 bg-card">
             <div className="flex items-center justify-between border-b border-line pb-3">
-              <span className="text-xs font-bold text-amber uppercase tracking-wider">
+              <span className="text-xs font-bold text-amber uppercase font-mono">
                 Question {answeredIds.size + 1} of {questionCount}
               </span>
-              <span className="text-xs font-bold text-teal bg-teal/10 px-3 py-1 rounded-full">
+              <span className="text-[11px] font-bold text-indigo bg-indigo/10 px-2.5 py-0.5 rounded-full border border-indigo/20">
                 Difficulty Level: {currentQuestion.difficulty}
               </span>
             </div>
 
-            <div className="space-y-4">
-              <h2 className="font-head text-lg font-bold">{currentQuestion.stem}</h2>
+            <div className="space-y-4 text-xs sm:text-sm">
+              <h2 className="font-bold text-ink text-base">{currentQuestion.stem}</h2>
 
               {currentQuestion.type === 'mcq' && currentQuestion.options ? (
                 <div className="space-y-2">
@@ -240,10 +231,10 @@ export default function AssessmentsPage() {
                       key={idx}
                       disabled={feedback !== null}
                       onClick={() => setSelectedAnswer(String(idx))}
-                      className={`w-full p-4 text-left rounded-2xl border text-sm font-semibold transition ${
+                      className={`w-full p-3.5 text-left rounded-xl border text-xs sm:text-sm font-medium transition-all ${
                         selectedAnswer === String(idx)
-                          ? 'bg-teal/10 border-teal text-teal'
-                          : 'bg-bg2 border-line text-ink hover:bg-line'
+                          ? 'bg-indigo/10 border-indigo text-indigo font-semibold'
+                          : 'bg-bg2 border-line text-ink hover:bg-card'
                       }`}
                     >
                       {opt}
@@ -257,7 +248,7 @@ export default function AssessmentsPage() {
                   disabled={feedback !== null}
                   value={selectedAnswer || ''}
                   onChange={(e) => setSelectedAnswer(e.target.value)}
-                  className="w-full p-4 rounded-2xl border border-line bg-bg2 text-sm focus:outline-none focus:ring-2 focus:ring-teal"
+                  className="w-full p-3 rounded-xl border border-line bg-bg2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo/20 text-ink"
                 />
               )}
             </div>
@@ -266,33 +257,33 @@ export default function AssessmentsPage() {
               <button
                 onClick={handleSubmitAnswer}
                 disabled={selectedAnswer === null}
-                className="w-full py-3.5 rounded-full bg-teal text-white font-bold flex items-center justify-center gap-2 hover:bg-teal/90 transition disabled:opacity-50 shadow-md"
+                className="w-full py-2.5 rounded-lg btn-indigo font-semibold text-xs flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
               >
                 Submit Answer <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
               <div className="space-y-4 pt-4 border-t border-line">
                 <div
-                  className={`p-4 rounded-2xl border text-xs space-y-2 ${
+                  className={`p-4 rounded-xl border text-xs space-y-1.5 ${
                     feedback.correct
                       ? 'bg-teal/10 border-teal/30 text-teal'
                       : 'bg-coral/10 border-coral/30 text-coral'
                   }`}
                 >
-                  <div className="font-bold flex items-center gap-2 text-sm">
+                  <div className="font-bold flex items-center gap-1.5 text-sm">
                     {feedback.correct ? (
                       <>
-                        <CheckCircle2 className="w-5 h-5 text-teal" /> Correct Answer!
+                        <CheckCircle2 className="w-4 h-4 text-teal" /> Correct Answer!
                       </>
                     ) : (
                       <>
-                        <XCircle className="w-5 h-5 text-coral" /> Incorrect
+                        <XCircle className="w-4 h-4 text-coral" /> Incorrect
                       </>
                     )}
                   </div>
                   <p className="text-ink">{feedback.explanation}</p>
                   {feedback.misconception && (
-                    <div className="p-2.5 rounded-xl bg-bg border border-line text-amber-900 dark:text-amber font-medium">
+                    <div className="p-2 rounded-lg bg-card border border-line text-amber font-medium mt-1">
                       <strong>Diagnosed Misconception:</strong> {feedback.misconception}
                     </div>
                   )}
@@ -301,23 +292,22 @@ export default function AssessmentsPage() {
                 <div className="flex items-center justify-between gap-4">
                   <button
                     onClick={() => setActiveCitation(currentQuestion.source)}
-                    className="text-xs font-bold text-teal underline flex items-center gap-1"
+                    className="text-xs font-semibold text-indigo underline flex items-center gap-1"
                   >
                     View Grounding Source ({currentQuestion.source.label})
                   </button>
 
                   <button
                     onClick={handleNextQuestion}
-                    className="py-3 px-6 rounded-full bg-teal text-white font-bold flex items-center gap-2 hover:bg-teal/90 transition shadow-md text-sm"
+                    className="py-2 px-5 rounded-lg btn-indigo font-semibold text-xs flex items-center gap-1.5 shadow-sm"
                   >
-                    Next Question <ArrowRight className="w-4 h-4" />
+                    Next Question <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Right Column: Source Previewer */}
           <div className="hidden md:block">
             <SourceViewer citation={activeCitation} onClose={() => setActiveCitation(null)} />
           </div>
@@ -326,26 +316,25 @@ export default function AssessmentsPage() {
 
       {/* 3. REPORT MODE */}
       {mode === 'report' && (
-        <div className="bg-bg border border-line rounded-3xl p-8 space-y-8 shadow-sm">
-          <div className="text-center space-y-2">
-            <div className="w-16 h-16 rounded-full bg-teal/10 flex items-center justify-center text-teal mx-auto">
-              <Award className="w-8 h-8" />
+        <div className="card-subtle rounded-2xl p-6 sm:p-8 space-y-6 bg-card text-center">
+          <div className="space-y-2">
+            <div className="w-12 h-12 rounded-xl bg-indigo/10 flex items-center justify-center text-indigo mx-auto">
+              <Award className="w-6 h-6" />
             </div>
-            <h1 className="font-head text-3xl font-bold text-deep dark:text-teal">
-              Assessment Report
+            <h1 className="text-2xl font-bold text-ink tracking-tight">
+              Assessment Diagnostic Report
             </h1>
-            <p className="text-sm text-mut">
-              Overall Accuracy: {Math.round((results.filter((r) => r.correct).length / results.length) * 100)}% ({results.filter((r) => r.correct).length} / {results.length})
+            <p className="text-xs sm:text-sm text-mut">
+              Accuracy: {Math.round((results.filter((r) => r.correct).length / results.length) * 100)}% ({results.filter((r) => r.correct).length} / {results.length})
             </p>
           </div>
 
-          {/* Misconceptions Diagnosis */}
           {results.some((r) => r.misconception) && (
-            <div className="p-6 bg-amber/10 border border-amber/30 rounded-2xl space-y-3">
-              <h3 className="font-head text-lg font-bold text-amber-900 dark:text-amber flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber" /> Diagnosed Misconceptions
+            <div className="p-4 bg-amber/10 border border-amber/20 rounded-xl space-y-2 text-left text-xs">
+              <h3 className="font-bold text-amber flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber" /> Diagnosed Misconceptions
               </h3>
-              <ul className="list-disc pl-5 text-xs space-y-2 text-ink">
+              <ul className="list-disc pl-4 space-y-1 text-ink">
                 {results
                   .filter((r) => r.misconception)
                   .map((r, i) => (
@@ -357,12 +346,12 @@ export default function AssessmentsPage() {
             </div>
           )}
 
-          <div className="flex justify-center gap-4 pt-4 border-t border-line">
+          <div className="flex justify-center gap-3 pt-4 border-t border-line">
             <button
               onClick={() => setMode('builder')}
-              className="py-3 px-6 rounded-full border border-line font-bold text-sm hover:bg-line transition flex items-center gap-2"
+              className="py-2.5 px-5 rounded-lg border border-line font-semibold text-xs text-ink hover:bg-bg2 transition-colors flex items-center gap-1.5"
             >
-              <RotateCcw className="w-4 h-4" /> Configure New Assessment
+              <RotateCcw className="w-3.5 h-3.5" /> Configure New Assessment
             </button>
           </div>
         </div>

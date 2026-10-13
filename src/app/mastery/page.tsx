@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { getLearnerMastery, getLearnerMasteryHistory } from '@/lib/api';
 import { MasteryPoint } from '@/lib/schemas';
-import { Award, Flame, Calendar, ArrowRight, TrendingUp, AlertCircle, Sparkles } from 'lucide-react';
+import { Award, Flame, Calendar, TrendingUp } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 export default function MasteryDashboardPage() {
@@ -24,58 +24,58 @@ export default function MasteryDashboardPage() {
   const weakTopics = mastery.filter((m) => m.pKnown < 0.5);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 py-6">
+    <div className="max-w-6xl mx-auto space-y-6 py-4">
       {/* Header Stat Banner */}
       <div className="grid sm:grid-cols-3 gap-4">
-        <div className="bg-bg border border-line rounded-3xl p-6 flex items-center gap-4 shadow-sm">
-          <div className="w-12 h-12 rounded-2xl bg-teal/10 flex items-center justify-center text-teal">
-            <Award className="w-6 h-6" />
+        <div className="card-subtle rounded-2xl p-5 flex items-center gap-4 bg-card">
+          <div className="w-10 h-10 rounded-xl bg-indigo/10 flex items-center justify-center text-indigo">
+            <Award className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-xs font-bold text-mut uppercase">Average Mastery</div>
-            <div className="text-2xl font-head font-bold text-teal">{overallAvg}%</div>
+            <div className="text-[10px] font-bold text-mut uppercase tracking-wider">Average Mastery</div>
+            <div className="text-xl font-extrabold text-ink">{overallAvg}%</div>
           </div>
         </div>
 
-        <div className="bg-bg border border-line rounded-3xl p-6 flex items-center gap-4 shadow-sm">
-          <div className="w-12 h-12 rounded-2xl bg-coral/10 flex items-center justify-center text-coral">
-            <Flame className="w-6 h-6" />
+        <div className="card-subtle rounded-2xl p-5 flex items-center gap-4 bg-card">
+          <div className="w-10 h-10 rounded-xl bg-coral/10 flex items-center justify-center text-coral">
+            <Flame className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-xs font-bold text-mut uppercase">Study Streak</div>
-            <div className="text-2xl font-head font-bold text-coral">7 Days</div>
+            <div className="text-[10px] font-bold text-mut uppercase tracking-wider">Study Streak</div>
+            <div className="text-xl font-extrabold text-ink">7 Days</div>
           </div>
         </div>
 
-        <div className="bg-bg border border-line rounded-3xl p-6 flex items-center gap-4 shadow-sm">
-          <div className="w-12 h-12 rounded-2xl bg-amber/10 flex items-center justify-center text-amber">
-            <Calendar className="w-6 h-6" />
+        <div className="card-subtle rounded-2xl p-5 flex items-center gap-4 bg-card">
+          <div className="w-10 h-10 rounded-xl bg-amber/10 flex items-center justify-center text-amber">
+            <Calendar className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-xs font-bold text-mut uppercase">Due for Revision</div>
-            <div className="text-2xl font-head font-bold text-amber">{weakTopics.length} Topics</div>
+            <div className="text-[10px] font-bold text-mut uppercase tracking-wider">Due for Revision</div>
+            <div className="text-xl font-extrabold text-ink">{weakTopics.length} Topics</div>
           </div>
         </div>
       </div>
 
       {/* Mastery Heatmap */}
-      <div className="bg-bg border border-line rounded-3xl p-6 space-y-4 shadow-sm">
-        <h2 className="font-head text-xl font-bold">Concept Mastery Heatmap</h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="card-subtle rounded-2xl p-6 space-y-4 bg-card">
+        <h2 className="text-base font-bold text-ink">Concept Mastery Heatmap</h2>
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
           {mastery.map((mp) => {
             const pKnownPct = Math.round(mp.pKnown * 100);
             const colorClass =
               pKnownPct >= 75
-                ? 'bg-teal/20 text-teal border-teal'
+                ? 'bg-teal/10 text-teal border-teal/20'
                 : pKnownPct >= 40
-                ? 'bg-amber/20 text-amber-900 border-amber dark:text-amber'
-                : 'bg-coral/20 text-coral border-coral';
+                ? 'bg-amber/10 text-amber border-amber/20'
+                : 'bg-coral/10 text-coral border-coral/20';
 
             return (
-              <div key={mp.conceptId} className={`p-4 rounded-2xl border-2 space-y-2 ${colorClass}`}>
-                <div className="text-xs font-bold uppercase">{mp.conceptName}</div>
-                <div className="text-2xl font-head font-bold">{pKnownPct}%</div>
-                <div className="text-[10px] opacity-80">Observations: {mp.nObs}</div>
+              <div key={mp.conceptId} className={`p-3.5 rounded-xl border space-y-1 ${colorClass}`}>
+                <div className="text-[10px] font-bold uppercase tracking-wider opacity-80">{mp.conceptName}</div>
+                <div className="text-lg font-bold">{pKnownPct}%</div>
+                <div className="text-[10px] opacity-75">Observations: {mp.nObs}</div>
               </div>
             );
           })}
@@ -83,25 +83,25 @@ export default function MasteryDashboardPage() {
       </div>
 
       {/* Mastery Over Time Chart */}
-      <div className="bg-bg border border-line rounded-3xl p-6 space-y-4 shadow-sm">
-        <h2 className="font-head text-xl font-bold flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-teal" /> Mastery Progress History
+      <div className="card-subtle rounded-2xl p-6 space-y-4 bg-card">
+        <h2 className="text-base font-bold text-ink flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 text-indigo" /> Mastery Progress History
         </h2>
-        <div className="h-64 w-full">
+        <div className="h-60 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={history}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" />
-              <XAxis dataKey="date" stroke="var(--mut)" fontSize={12} />
-              <YAxis stroke="var(--mut)" fontSize={12} domain={[0, 1]} />
+              <XAxis dataKey="date" stroke="var(--mut)" fontSize={11} />
+              <YAxis stroke="var(--mut)" fontSize={11} domain={[0, 1]} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'var(--bg2)',
+                  backgroundColor: 'var(--card)',
                   borderColor: 'var(--line)',
-                  borderRadius: '1rem',
+                  borderRadius: '0.75rem',
                   fontSize: '12px',
                 }}
               />
-              <Line type="monotone" dataKey="mastery" stroke="var(--teal)" strokeWidth={3} dot={{ r: 5 }} />
+              <Line type="monotone" dataKey="mastery" stroke="var(--indigo)" strokeWidth={2.5} dot={{ r: 4 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
