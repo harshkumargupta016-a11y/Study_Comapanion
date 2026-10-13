@@ -1,1 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Study Companion | IIT Mandi Multimodal Hackathon</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{bg:'var(--bg)',bg2:'var(--bg2)',ink:'var(--ink)',mut:'var(--mut)',deep:'var(--deep)',teal:'var(--teal)',coral:'var(--coral)',amber:'var(--amber)',line:'var(--line)'},fontFamily:{sans:['Calibri','Segoe UI','system-ui','sans-serif'],head:['Cambria','Georgia','serif']}}}}
+</script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#ffffff;--bg2:#eef3f3;--ink:#13202a;--mut:#56656f;--deep:#0e3b43;--teal:#0f766e;--coral:#e4572e;--amber:#f2a81d;--line:#d5e0e0;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1a1f;--bg2:#12272d;--ink:#e8f0f0;--mut:#9fb3b8;--deep:#06242a;--teal:#14907f;--coral:#e4572e;--line:#23393f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1a1f;--bg2:#12272d;--ink:#e8f0f0;--mut:#9fb3b8;--deep:#06242a;--teal:#14907f;--coral:#e4572e;--line:#23393f;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4.5rem)}
+body{background:var(--bg);color:var(--ink)}
+.glass{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px)}
+.pill{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.35rem .8rem;font-weight:700;font-size:.85rem}
+.cv{background:var(--coral);color:#fff}.cb{background:var(--teal);color:#fff}.cs{background:var(--amber);color:#13202a}
+.btn{border-radius:999px;padding:.7rem 1.4rem;font-weight:700}
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<header class="glass sticky z-30 border-b border-line" style="top:env(safe-area-inset-top,0px)">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <a href="#top" class="font-head text-lg font-bold">📚 AI Study Companion</a>
+    <nav class="hidden gap-5 text-sm font-semibold text-mut md:flex">
+      <a href="#problem">Problem</a><a href="#solution">Solution</a><a href="#how">How it works</a><a href="#stack">Tech</a><a href="#trust">Reliability</a><a href="#impact">Impact</a>
+    </nav>
+    <a href="#demo" class="btn cb text-sm">Try the demo</a>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 md:grid-cols-2 md:py-20">
+  <div>
+    <span class="pill cs">IIT Mandi Multimodal Hackathon · Track D</span>
+    <h1 class="mt-4 font-head text-4xl font-bold leading-tight md:text-5xl">Study from your own material, with proof.</h1>
+    <p class="mt-4 text-lg text-mut">One source-cited knowledge base for lecture videos, textbooks and slides, with adaptive assessment and personalized tutoring.</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href="#demo" class="btn cb">Try the live demo</a>
+      <a href="#how" class="btn border border-line">See how it works</a>
+    </div>
+  </div>
+  <div class="rounded-3xl bg-deep p-6 text-white">
+    <div class="flex flex-wrap gap-2"><span class="pill cv">🎬 Lecture video</span><span class="pill cb">📘 Textbook PDF</span><span class="pill cs">🖼️ Slide deck</span></div>
+    <div class="my-3 text-center text-2xl text-amber">↓</div>
+    <div class="rounded-2xl bg-white/10 p-4">
+      <div class="text-sm font-bold text-amber">Cited answer</div>
+      <p class="mt-1">Deadlock needs four conditions at once: mutual exclusion, hold and wait, no preemption and circular wait.</p>
+      <div class="mt-3 flex flex-wrap gap-2"><span class="pill cv">Lecture 7 · 14:32</span><span class="pill cb">Textbook p.231</span><span class="pill cs">Slide 12</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" class="bg-bg2 py-14"><div class="mx-auto max-w-6xl px-4">
+  <h2 class="font-head text-3xl font-bold">Study material is scattered</h2>
+  <p class="mt-2 text-mut">One exam can mean all of this. Finding "where was this explained?" takes hours.</p>
+  <div id="stats" class="mt-6 grid gap-4 md:grid-cols-3"></div>
+  <div id="pains" class="mt-4 grid gap-4 md:grid-cols-2"></div>
+  <div class="mt-8 overflow-x-auto rounded-2xl border border-line bg-bg">
+    <table class="w-full min-w-[34rem] text-left text-sm">
+      <thead class="bg-deep text-white"><tr><th class="p-3">Capability</th><th class="p-3 text-center">Generic chatbots</th><th class="p-3 text-center">Source-grounded Q&amp;A</th><th class="p-3 text-center">AI Study Companion</th></tr></thead>
+      <tbody id="cmp"></tbody>
+    </table>
+  </div>
+  <p class="mt-2 text-xs text-mut">Typical capabilities; individual products vary.</p>
+</div></section>
+
+<!-- SOLUTION -->
+<section id="solution" class="mx-auto max-w-6xl px-4 py-14">
+  <h2 class="font-head text-3xl font-bold">Four pillars, one loop</h2>
+  <div id="pillars" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"></div>
+</section>
+
+<!-- HOW -->
+<section id="how" class="bg-bg2 py-14"><div class="mx-auto max-w-6xl px-4">
+  <h2 class="font-head text-3xl font-bold">How the pipeline works</h2>
+  <p class="mt-2 text-mut">All three flows share one knowledge base and one mastery model.</p>
+  <div id="flow" class="mt-6 space-y-4"></div>
+</div></section>
+
+<!-- DEMO -->
+<section id="demo" class="mx-auto max-w-6xl px-4 py-14">
+  <h2 class="font-head text-3xl font-bold">Try it: the 3-minute demo</h2>
+  <p class="mt-2 text-mut">Interactive prototype with sample Operating Systems content. Click a citation to open its source.</p>
+  <div class="mt-6 flex gap-2" role="tablist">
+    <button class="tab btn" data-t="ask">1 · Ask</button>
+    <button class="tab btn" data-t="quiz">2 · Adaptive quiz</button>
+    <button class="tab btn" data-t="mastery">3 · Mastery</button>
+  </div>
+  <div id="panel" class="mt-4 rounded-3xl border border-line bg-bg2 p-5 md:p-6"></div>
+</section>
+
+<!-- STACK -->
+<section id="stack" class="bg-bg2 py-14"><div class="mx-auto max-w-6xl px-4">
+  <h2 class="font-head text-3xl font-bold">Tech stack</h2>
+  <div id="stackg" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+  <p class="mt-4 text-sm italic text-mut">Lean MVP: Next.js + FastAPI + pgvector (Supabase) + faster-whisper + Gemini or Claude API</p>
+</div></section>
+
+<!-- TRUST -->
+<section id="trust" class="mx-auto max-w-6xl px-4 py-14">
+  <h2 class="font-head text-3xl font-bold">Built to be trusted</h2>
+  <div class="mt-6 grid gap-4 lg:grid-cols-3">
+    <div id="trustg" class="grid gap-4 sm:grid-cols-2 lg:col-span-2"></div>
+    <div class="rounded-2xl bg-deep p-5 text-white">
+      <h3 class="font-head text-xl font-bold text-amber">Metrics we report</h3>
+      <ul class="mt-3 list-disc space-y-2 pl-5"><li>Recall@k of retrieval</li><li>Citation accuracy</li><li>Faithfulness (RAGAS)</li><li>Question quality, human rated</li><li>Adaptive prediction accuracy</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- FEASIBILITY -->
+<section class="bg-bg2 py-14"><div class="mx-auto max-w-6xl px-4">
+  <h2 class="font-head text-3xl font-bold">Feasible in a hackathon</h2>
+  <span class="pill cb mt-3">Technical feasibility: High</span>
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <div class="rounded-2xl bg-bg p-5"><h3 class="font-head text-xl font-bold">MVP scope</h3><ul id="mvp" class="mt-3 space-y-2"></ul></div>
+    <div class="rounded-2xl bg-bg p-5"><h3 class="font-head text-xl font-bold">Risk and mitigation</h3><ul id="risk" class="mt-3 space-y-2"></ul></div>
+  </div>
+</div></section>
+
+<!-- IMPACT -->
+<section id="impact" class="mx-auto max-w-6xl px-4 py-14">
+  <h2 class="font-head text-3xl font-bold">Impact and benefits</h2>
+  <div id="imp" class="mt-6 grid gap-4 md:grid-cols-2"></div>
+  <div class="mt-4 flex flex-wrap items-center gap-x-8 gap-y-2 rounded-2xl bg-deep p-5 text-white">
+    <b class="text-amber">Pilot targets</b><span>Hours to seconds to find a concept</span><span>Near-100% verified citations</span><span>Mastery rising each session</span>
+  </div>
+</section>
+
+<!-- FUTURE + SOURCES -->
+<section class="bg-bg2 py-14"><div class="mx-auto max-w-6xl px-4">
+  <h2 class="font-head text-3xl font-bold">Where it goes next</h2>
+  <div id="fut" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+  <h2 class="mt-14 font-head text-3xl font-bold">Data and sources</h2>
+  <div id="src" class="mt-6 divide-y divide-line rounded-2xl border border-line bg-bg"></div>
+  <p class="mt-3 text-sm italic text-mut">Demo uses only openly licensed or self-owned content; each license is checked and cited in the submission.</p>
+</div></section>
+
+<!-- CLOSING -->
+<section class="bg-deep py-16 text-white"><div class="mx-auto max-w-6xl px-4">
+  <p class="max-w-3xl font-head text-2xl italic md:text-3xl">"Students don't lack content. They lack a way to connect it and know what they don't know."</p>
+  <div id="crit" class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5"></div>
+  <p class="mt-8 font-head text-2xl font-bold text-amber">Thank you. Questions?</p>
+</div></section>
+</main>
+<footer class="border-t border-line px-4 py-6 text-center text-sm text-mut">AI Study Companion · IIT Mandi Multimodal Hackathon · Track D: Personalized Tutoring &amp; Adaptive Learning</footer>
+
+<script>
+const $=s=>document.querySelector(s),H=(s,h)=>{$(s).innerHTML=h};
+const card='rounded-2xl bg-bg p-5',card2='rounded-2xl bg-bg2 p-5';
+const CL={v:'cv',b:'cb',s:'cs'},IC={v:'🎬',b:'📘',s:'🖼️'};
+
+H('#stats',[['🎬','90 min','recorded lecture'],['📘','600 pages','textbook'],['🖼️','80 slides','slide deck']].map(([i,n,l])=>`<div class="${card} flex items-center gap-4"><div class="text-4xl">${i}</div><div><div class="font-head text-3xl font-bold">${n}</div><div class="text-mut">${l}</div></div></div>`).join(''));
+H('#pains',['Chatbots hallucinate, with no proof of source','Practice is one-size-fits-all','Teachers cannot see class-wide gaps','Large classes get little one-on-one help'].map(t=>`<div class="${card} flex items-center gap-3"><span class="text-teal">●</span>${t}</div>`).join(''));
+const Y='<td class="p-3 text-center font-bold text-teal">Yes</td>',N='<td class="p-3 text-center text-mut">No</td>',P='<td class="p-3 text-center">Partly</td>';
+H('#cmp',[['One base for video, book and slides',N,P,Y],['Click-through citation to the exact source',N,P,Y],['Adaptive question difficulty',N,N,Y],['Per-concept mastery tracking',N,N,Y],['Diagnoses why the student erred',P,N,Y]].map(r=>`<tr class="border-t border-line"><td class="p-3 font-semibold">${r[0]}</td>${r[1]}${r[2]}${r[3]}</tr>`).join(''));
+H('#pillars',[['🧩','Unify','Videos, textbooks and slides in one searchable base','cb'],['❝','Cite','Every answer links to a timestamp, page or slide','cv'],['🎯','Assess','Questions rise and fall with your mastery','cs'],['🧑‍🏫','Tutor','Explains why you erred, in your language','cb']].map(([i,t,d,c])=>`<div class="${card2}"><div class="pill ${c} text-lg">${i}</div><h3 class="mt-3 font-head text-xl font-bold">${t}</h3><p class="mt-1 text-mut">${d}</p></div>`).join(''));
+H('#flow',[['INGEST',['Upload video, PDF, PPT','Transcribe, parse, OCR','Chunk + source metadata','Embed and index']],['ASK',['Student question','Hybrid search + rerank','Answer with citations','Verify, open source']],['LEARN',['Questions from chunks','Update mastery','Pick next question','Tutor + revision plan']]].map(([l,s])=>`<div class="flex flex-col gap-2 md:flex-row md:items-stretch"><div class="pill cb justify-center md:w-24 md:rounded-xl">${l}</div>${s.map(x=>`<div class="flex-1 rounded-xl bg-bg p-3 text-center font-semibold">${x}</div>`).join('<div class="self-center text-amber">➜</div>')}</div>`).join(''));
+H('#stackg',[['🖥️','Frontend','Next.js, Tailwind, Recharts, react-player, PDF.js'],['🗄️','Backend and data','FastAPI, PostgreSQL + pgvector, Celery + Redis'],['🎞️','Multimodal ingest','faster-whisper, PyMuPDF, python-pptx, Tesseract or vision LLM'],['🔎','Retrieval','BGE-M3 or multilingual-e5, BM25 + vectors, bge-reranker'],['🤖','LLM and tutoring','Gemini, Claude, Llama or Qwen via API'],['📈','Adaptive and eval','py-irt, Elo or BKT; RAGAS and citation tests']].map(([i,t,d])=>`<div class="${card}"><div class="text-2xl">${i}</div><h3 class="mt-2 font-bold">${t}</h3><p class="text-mut">${d}</p></div>`).join(''));
+H('#trustg',[['🛡️','Grounded only','Answers use retrieved chunks, citations required'],['✅','Verified','Entailment check on every cited claim'],['✋','Honest abstention','Says "not found" when retrieval is weak'],['🧑‍⚖️','Human in the loop','Teachers flag questions; data stays private']].map(([i,t,d])=>`<div class="${card2}"><div class="text-2xl">${i}</div><h3 class="mt-2 font-bold">${t}</h3><p class="text-mut">${d}</p></div>`).join(''));
+H('#mvp',['One subject: 1 video + 1 PDF + 1 PPT','Cited chat with clickable sources','Adaptive 10-question quiz','Mastery heatmap + revise list'].map(t=>`<li class="flex gap-2"><span class="text-teal">✔</span>${t}</li>`).join(''));
+H('#risk',[['Slow transcription','pre-process, async jobs'],['Weak diagram OCR','vision-LLM fallback'],['Hallucination','context-only, abstain'],['Cold start','short diagnostic quiz']].map(([a,b])=>`<li><b class="text-coral">${a}:</b> ${b}</li>`).join(''));
+H('#imp',[['🎓','Students','Save hours, trust every answer, practise at the right level'],['🧑‍🏫','Teachers','See class-wide weak concepts; source-linked questions'],['🏫','Institutions','Scale mentoring without more staff; flag at-risk students'],['🌏','Society','One-on-one-style help for large, under-resourced classes']].map(([i,t,d])=>`<div class="${card2} flex gap-4"><div class="text-3xl">${i}</div><div><h3 class="font-head text-xl font-bold">${t}</h3><p class="text-mut">${d}</p></div></div>`).join(''));
+H('#fut',[['🧬','Richer multimodality','Diagrams, graphs, equations and code in slides and video'],['🎙️','Voice tutor','Ask and hear answers in Hindi and regional languages'],['📱','Offline and mobile','On-device small models; app with revision reminders'],['📋','Teacher co-pilot','Lesson plans, class reports, Classroom and Moodle sync'],['📖','Curriculum alignment','NCERT, CBSE, university syllabi, JEE, NEET, GATE'],['🧠','Smarter learning','FSRS revision, misconception detection, accessibility']].map(([i,t,d])=>`<div class="${card}"><div class="text-2xl">${i}</div><h3 class="mt-2 font-bold">${t}</h3><p class="text-mut">${d}</p></div>`).join(''));
+H('#src',[['Lecture videos','NPTEL, MIT OpenCourseWare, Khan Academy'],['Textbooks and slides','OpenStax, NCERT, LibreTexts, NPTEL and OCW decks'],['Evaluation questions','GATE papers, NCERT exercises, SciQ, MMLU subsets'],['Adaptive modeling','ASSISTments, EdNet, Junyi Academy, simulated students'],['Pre-trained models','Hugging Face: embeddings, rerankers, Whisper']].map(([a,b])=>`<div class="grid gap-1 p-4 sm:grid-cols-3"><b>${a}</b><span class="text-mut sm:col-span-2">${b}</span></div>`).join(''));
+H('#crit',[['Innovation','Cited answers plus an adaptive loop'],['Technical depth','Multimodal RAG, mastery models'],['Impact','Tutoring at scale'],['Feasibility','Proven tools, scoped MVP'],['Reliability','Verified citations, abstention']].map(([a,b])=>`<div class="rounded-2xl bg-white/10 p-4"><b class="text-amber">${a}</b><p class="mt-1 text-sm">${b}</p></div>`).join(''));
+
+/* ---------- DEMO ---------- */
+const QA=[
+{q:"What are the four conditions for deadlock?",a:"Deadlock needs four conditions at once: mutual exclusion, hold and wait, no preemption and circular wait. Remove any one and deadlock cannot occur.",c:[
+ {t:'v',l:'Lecture 7 · 14:32',p:62,x:"…remove any one of these four conditions and the system can never deadlock…"},
+ {t:'b',l:'Textbook p.231',x:"Deadlock can arise only if mutual exclusion, hold and wait, no preemption and circular wait all hold at the same time."},
+ {t:'s',l:'Slide 12',h:'Deadlock: necessary conditions',x:['Mutual exclusion','Hold and wait','No preemption','Circular wait']}]},
+{q:"How does Round Robin differ from FCFS?",a:"Round Robin gives each process a fixed time quantum, then rotates, so short jobs wait less. With a very large quantum it degenerates into FCFS.",c:[
+ {t:'v',l:'Lecture 4 · 08:10',p:35,x:"…with a huge quantum, round robin just behaves like first come, first served…"},
+ {t:'b',l:'Textbook p.96',x:"A time quantum much larger than typical CPU bursts makes Round Robin behave like FCFS."},
+ {t:'s',l:'Slide 7',h:'Round Robin',x:['Fixed time quantum','Preemptive rotation','Large quantum → FCFS']}]},
+{q:"What is Belady's anomaly?",a:"Under FIFO page replacement, adding more frames can sometimes increase page faults. Stack algorithms such as LRU never show this.",c:[
+ {t:'v',l:'Lecture 9 · 21:45',p:78,x:"…more frames should mean fewer faults, but with FIFO that is not guaranteed…"},
+ {t:'b',l:'Textbook p.341',x:"Belady's anomaly: under FIFO, a larger number of frames can produce more page faults."},
+ {t:'s',l:'Slide 18',h:'Page replacement',x:['FIFO can show the anomaly','LRU is a stack algorithm','Stack algorithms never do']}]},
+{q:"Who won the 2022 football World Cup?",a:null}];
+
+function srcView(c){
+  let b;
+  if(c.t==='v')b=`<div class="mt-3 h-2 rounded-full bg-line"><div class="relative h-2 rounded-full bg-coral" style="width:${c.p}%"><span class="absolute -right-1.5 -top-1 h-4 w-4 rounded-full border-2 border-white bg-coral"></span></div></div><p class="mt-4 italic">“${c.x}”</p>`;
+  else if(c.t==='b')b=`<p class="mt-4 rounded-lg bg-amber/30 p-3">${c.x}</p>`;
+  else b=`<div class="mt-3 rounded-xl border-2 border-line bg-bg p-4"><b class="font-head text-lg">${c.h}</b><ul class="mt-2 list-disc pl-5">${c.x.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  return `<div class="text-sm font-bold text-mut">${IC[c.t]} Source opened: ${c.l}</div>${b}<p class="mt-3 text-xs text-mut">Sample content for the demo.</p>`;
+}
+let qi=0,ci=-1;
+function drawAsk(){
+  const it=QA[qi];
+  let ans;
+  if(it.a===null)ans=`<div class="rounded-2xl border border-amber p-4"><b>I couldn't find this in your materials.</b><p class="mt-1 text-mut">Retrieval confidence was below the threshold, so the companion abstains instead of guessing.</p></div>`;
+  else ans=`<div class="rounded-2xl bg-bg p-4"><p>${it.a}</p><div class="mt-3 flex flex-wrap gap-2">${it.c.map((c,i)=>`<button class="pill ${CL[c.t]} ${i===ci?'ring-2 ring-ink':''}" data-c="${i}">${IC[c.t]} ${c.l}</button>`).join('')}</div></div>`;
+  H('#panel',`<div class="flex flex-wrap gap-2">${QA.map((x,i)=>`<button data-q="${i}" class="pill border border-line ${i===qi?'bg-deep text-white':'bg-bg'}">${x.q}</button>`).join('')}</div>
+  <div class="mt-4 grid gap-4 md:grid-cols-2"><div>${ans}</div><div class="rounded-2xl bg-bg p-4">${ci>=0&&it.a!==null?srcView(it.c[ci]):'<p class="text-mut">Click a citation chip to open the exact timestamp, page or slide.</p>'}</div></div>`);
+  document.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{qi=+b.dataset.q;ci=-1;drawAsk()});
+  document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{ci=+b.dataset.c;drawAsk()});
+}
+
+const CON=['Deadlock','Scheduling','Memory','Sync'];
+const QZ=[
+['Deadlock',1,"Which is NOT a necessary condition for deadlock?",['Mutual exclusion','Hold and wait','Preemption','Circular wait'],2,"Deadlock needs NO preemption. Allowing preemption breaks the condition."],
+['Scheduling',1,"Which algorithm minimizes average waiting time when burst times are known?",['SJF','FCFS','Round Robin','Priority'],0,"Shortest Job First is provably optimal for average waiting time."],
+['Memory',1,"What does a page table map?",['Files to blocks','Virtual pages to physical frames','Processes to threads','Interrupts to handlers'],1,"It translates virtual page numbers to physical frame numbers."],
+['Sync',2,"A semaphore initialised to 1 is most similar to a:",['Mutex lock','Message queue','Page table','Timer'],0,"A binary semaphore gives mutual exclusion like a lock."],
+['Deadlock',2,"A cycle in a resource-allocation graph with single-instance resources means:",['Deadlock exists','Safe state','No deadlock','Starvation only'],0,"With single instances, a cycle is both necessary and sufficient for deadlock."],
+['Scheduling',2,"Round Robin with a very large time quantum behaves like:",['FCFS','SJF','Priority','Multilevel queue'],0,"The quantum never expires, so processes run to completion in arrival order."],
+['Memory',3,"Belady's anomaly can occur with which page replacement policy?",['FIFO','LRU','Optimal','Any stack algorithm'],0,"Only non-stack policies like FIFO can show it."],
+['Sync',3,"Peterson's solution for two processes guarantees:",['Mutual exclusion, progress, bounded waiting','Deadlock detection','Priority inheritance','Atomic hardware operations'],0,"It satisfies all three critical-section requirements without special hardware."],
+['Deadlock',3,"The Banker's algorithm is an example of deadlock:",['Avoidance','Prevention','Detection','Recovery'],0,"It grants a request only if the resulting state is safe."]];
+let st=null;
+const LV=['','Easy','Medium','Hard'];
+function qNext(){
+  if(st.done.length>=6){st.cur=null;return}
+  const pool=QZ.map((q,i)=>i).filter(i=>!st.done.includes(i));
+  const best=Math.min(...pool.map(i=>Math.abs(QZ[i][1]-st.r)));
+  const c=pool.filter(i=>Math.abs(QZ[i][1]-st.r)===best);
+  st.cur=c[Math.floor(Math.random()*c.length)];st.ans=null;
+}
+function qStart(){st={r:2,done:[],cur:null,m:{},score:0,ans:null};qNext();drawQuiz()}
+function meter(){return `<div class="mt-2"><div class="flex justify-between text-xs text-mut"><span>Estimated level</span><span>${st.r<1.6?'Easy':st.r<2.4?'Medium':'Hard'}</span></div><div class="mt-1 h-2 rounded-full bg-line"><div class="h-2 rounded-full bg-teal transition-all" style="width:${(st.r-1)/2*100}%"></div></div></div>`}
+function drawQuiz(){
+  if(!st){H('#panel',`<p>An adaptive 6-question quiz. Each answer updates your level and per-concept mastery, and the next question is chosen just above your level.</p><button id="go" class="btn cb mt-4">Start quiz</button>`);$('#go').onclick=qStart;return}
+  if(st.cur===null){
+    const weak=CON.filter(c=>(st.m[c]??.5)<.6);
+    H('#panel',`<h3 class="font-head text-2xl font-bold">Quiz complete: ${st.score} / 6</h3>${meter()}<p class="mt-4">${weak.length?'Revise next: <b>'+weak.join(', ')+'</b>':'Strong across all tested concepts.'}</p><div class="mt-4 flex gap-2"><button id="gm" class="btn cb">See mastery</button><button id="go" class="btn border border-line">Restart</button></div>`);
+    $('#gm').onclick=()=>tab('mastery');$('#go').onclick=qStart;return}
+  const q=QZ[st.cur],a=st.ans;
+  H('#panel',`<div class="flex flex-wrap items-center gap-2"><span class="pill cs">${LV[q[1]]}</span><span class="pill border border-line">${q[0]}</span><span class="text-sm text-mut">Question ${st.done.length+(a===null?1:0)} of 6</span></div>${meter()}
+  <h3 class="mt-4 text-lg font-bold">${q[2]}</h3>
+  <div class="mt-3 grid gap-2 sm:grid-cols-2">${q[3].map((o,i)=>`<button data-a="${i}" ${a!==null?'disabled':''} class="rounded-xl border-2 p-3 text-left font-semibold ${a===null?'border-line bg-bg':i===q[4]?'border-teal bg-bg':i===a?'border-coral bg-bg':'border-line bg-bg opacity-60'}">${o}</button>`).join('')}</div>
+  ${a!==null?`<div class="mt-4 rounded-xl bg-bg p-4"><b>${a===q[4]?'Correct.':'Not quite.'}</b> ${q[5]}<p class="mt-2 text-xs text-mut">Every real question links back to its source passage.</p></div><button id="nx" class="btn cb mt-4">${st.done.length>=6?'Finish':'Next question'}</button>`:''}`);
+  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.a,ok=k===q[4],m=st.m[q[0]]??.5;
+    st.ans=k;st.done.push(st.cur);st.score+=ok;
+    st.r=Math.max(1,Math.min(3,st.r+(ok?.5:-.5)));
+    st.m[q[0]]=ok?m+(1-m)*.4:m*.65;drawQuiz()});
+  if($('#nx'))$('#nx').onclick=()=>{qNext();drawQuiz()};
+}
+function drawMastery(){
+  if(!st||!Object.keys(st.m).length){H('#panel','<p>Take the adaptive quiz first. Your per-concept mastery heatmap and revision list appear here.</p><button id="go" class="btn cb mt-4">Go to quiz</button>');$('#go').onclick=()=>tab('quiz');return}
+  const col=v=>v==null?'var(--line)':v<.35?'var(--coral)':v<.65?'var(--amber)':'var(--teal)';
+  const weak=CON.filter(c=>st.m[c]!=null&&st.m[c]<.65).sort((a,b)=>st.m[a]-st.m[b]);
+  H('#panel',`<h3 class="font-head text-2xl font-bold">Mastery heatmap</h3><div class="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">${CON.map(c=>{const v=st.m[c];return `<div class="rounded-xl p-4 text-center font-bold" style="background:${col(v)};color:${v==null?'var(--mut)':'#13202a'}">${c}<div class="text-2xl">${v==null?'—':Math.round(v*100)+'%'}</div></div>`}).join('')}</div>
+  <p class="mt-4"><b>Revise these topics:</b> ${weak.length?weak.join(', '):'nothing urgent, keep practising harder questions.'}</p><p class="mt-1 text-sm text-mut">Grey means not tested yet. A spaced-repetition plan schedules revision before the exam.</p>`);
+}
+function tab(t){
+  document.querySelectorAll('.tab').forEach(b=>{const on=b.dataset.t===t;b.className='tab btn '+(on?'cb':'border border-line')});
+  ({ask:drawAsk,quiz:drawQuiz,mastery:drawMastery})[t]();
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>tab(b.dataset.t));
+tab('ask');
+</script>
+</body>
+</html>
 
