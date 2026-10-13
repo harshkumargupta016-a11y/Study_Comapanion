@@ -81,7 +81,8 @@ export function selectNextQuestion(
   for (const q of availableQuestions) {
     const conceptMastery = masteryMap.get(q.conceptId) ?? 0.5;
     // Map difficulty 1..3 to estimated success probability for current learner level
-    const estimatedSuccess = Math.max(0.2, 1.0 - (q.difficulty * 0.25 - conceptMastery * 0.2));
+    const diffNum: number = Number(q.difficulty);
+    const estimatedSuccess = Math.max(0.2, 1.0 - (diffNum * 0.25 - conceptMastery * 0.2));
 
     const successDiff = Math.abs(estimatedSuccess - targetSuccessRate);
     const score = successDiff + conceptMastery * 0.5; // Weight low-mastery concepts

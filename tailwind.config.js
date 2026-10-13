@@ -11,24 +11,21 @@ module.exports = {
       colors: {
         bg: 'var(--bg)',
         bg2: 'var(--bg2)',
+        card: 'var(--card)',
         ink: 'var(--ink)',
         mut: 'var(--mut)',
         deep: 'var(--deep)',
+        indigo: 'var(--indigo)',
         teal: 'var(--teal)',
         coral: 'var(--coral)',
         amber: 'var(--amber)',
         line: 'var(--line)',
-        modality: {
-          video: 'var(--coral)',
-          pdf: 'var(--teal)',
-          slide: 'var(--amber)',
-        }
       },
       fontFamily: {
-        sans: ['Calibri', 'Segoe UI', 'system-ui', 'sans-serif'],
-        head: ['Cambria', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       borderRadius: {
+        'xl': '0.75rem',
         '2xl': '1rem',
         '3xl': '1.5rem',
       }

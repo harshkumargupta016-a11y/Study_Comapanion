@@ -5,17 +5,17 @@ import { useChatStore } from '@/store/chatStore';
 import { useMasteryStore } from '@/store/masteryStore';
 import { sendChatMessage } from '@/lib/api';
 import { SourceViewer } from '@/components/SourceViewer';
-import { Citation, Message } from '@/lib/schemas';
+import { Message } from '@/lib/schemas';
 import {
   Send,
   Mic,
   Languages,
   Brain,
-  HelpCircle,
   Sparkles,
   AlertTriangle,
   Info,
   CheckCircle2,
+  InfoIcon
 } from 'lucide-react';
 
 export default function ChatPage() {
@@ -48,10 +48,8 @@ export default function ChatPage() {
     addMessage(userMsg);
     if (!overrideText) setInput('');
 
-    // Fetch response
     const assistantMsg = await sendChatMessage(query);
 
-    // Simulated token-by-token streaming effect
     let currentContent = '';
     const fullText = assistantMsg.content;
     const tokens = fullText.split(' ');
@@ -63,7 +61,7 @@ export default function ChatPage() {
     addMessage(streamingMsg);
 
     for (let i = 0; i < tokens.length; i++) {
-      await new Promise((res) => setTimeout(res, 30));
+      await new Promise((res) => setTimeout(res, 25));
       currentContent += (i === 0 ? '' : ' ') + tokens[i];
       useChatStore.setState((state) => ({
         messages: state.messages.map((m) =>
@@ -72,7 +70,6 @@ export default function ChatPage() {
       }));
     }
 
-    // Nudge BKT mastery on successful chat interaction
     if (assistantMsg.grounded) {
       recordObservation('c-deadlock', true);
       showToast('Mastery updated for Deadlock concept (+5%)');
@@ -83,22 +80,22 @@ export default function ChatPage() {
     <div className="h-[calc(100vh-6rem)] flex flex-col md:flex-row gap-6 max-w-7xl mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-4 right-4 z-50 bg-teal text-white font-bold px-4 py-2.5 rounded-2xl shadow-lg flex items-center gap-2 text-xs">
+        <div className="fixed top-4 right-4 z-50 bg-teal text-white font-semibold px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2 text-xs">
           <CheckCircle2 className="w-4 h-4" /> {toastMessage}
         </div>
       )}
 
-      {/* LEFT PANE: Chat */}
-      <div className="flex-1 flex flex-col bg-bg rounded-3xl border border-line overflow-hidden shadow-sm">
-        {/* Chat Control Bar */}
-        <div className="p-4 bg-bg2 border-b border-line flex flex-wrap items-center justify-between gap-3 text-xs font-bold">
+      {/* LEFT PANE: Chat Container */}
+      <div className="flex-1 flex flex-col card-subtle rounded-2xl bg-card overflow-hidden">
+        {/* Chat Control Header */}
+        <div className="p-3.5 bg-bg2 border-b border-line flex flex-wrap items-center justify-between gap-3 text-xs font-medium">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSocraticMode(!socraticMode)}
-              className={`px-3 py-1.5 rounded-full border transition flex items-center gap-1.5 ${
+              className={`px-3 py-1 rounded-full border transition-all flex items-center gap-1.5 ${
                 socraticMode
-                  ? 'bg-amber text-ink border-amber'
-                  : 'bg-bg border-line text-mut hover:bg-line'
+                  ? 'bg-amber/10 border-amber/30 text-amber font-semibold'
+                  : 'bg-card border-line text-mut hover:text-ink'
               }`}
             >
               <Brain className="w-3.5 h-3.5" /> Socratic Mode: {socraticMode ? 'ON' : 'OFF'}
@@ -106,18 +103,18 @@ export default function ChatPage() {
 
             <button
               onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-              className="px-3 py-1.5 rounded-full bg-bg border border-line text-mut hover:bg-line transition flex items-center gap-1.5"
+              className="px-3 py-1 rounded-full bg-card border border-line text-mut hover:text-ink transition-colors flex items-center gap-1.5"
             >
               <Languages className="w-3.5 h-3.5" /> {language === 'en' ? 'English' : 'Hindi (हिंदी)'}
             </button>
           </div>
 
-          <label className="flex items-center gap-2 cursor-pointer text-mut">
+          <label className="flex items-center gap-2 cursor-pointer text-mut text-xs select-none">
             <input
               type="checkbox"
               checked={showOutsideKnowledge}
               onChange={(e) => setShowOutsideKnowledge(e.target.checked)}
-              className="rounded accent-teal"
+              className="rounded accent-indigo"
             />
             Show Outside Knowledge
           </label>
@@ -127,27 +124,27 @@ export default function ChatPage() {
         <div className="flex-1 p-4 overflow-y-auto space-y-4">
           {messages.length === 0 && (
             <div className="text-center py-12 space-y-4 max-w-sm mx-auto">
-              <Sparkles className="w-10 h-10 text-teal mx-auto" />
-              <h3 className="font-head text-lg font-bold">Source-Grounded AI Tutor</h3>
+              <Sparkles className="w-8 h-8 text-indigo mx-auto" />
+              <h3 className="font-bold text-base text-ink">Source-Grounded AI Tutor</h3>
               <p className="text-xs text-mut">
-                Ask any question about your course materials. Try these quick prompts:
+                Ask any question about your course materials. Try these prompts:
               </p>
               <div className="space-y-2 text-left">
                 <button
                   onClick={() => handleSend("What are the four conditions for deadlock?")}
-                  className="w-full p-3 rounded-2xl bg-bg2 border border-line text-xs font-semibold hover:border-teal transition text-left"
+                  className="w-full p-3 rounded-xl bg-bg2 border border-line text-xs font-medium hover:border-indigo transition-colors text-left"
                 >
                   "What are the four conditions for deadlock?"
                 </button>
                 <button
                   onClick={() => handleSend("How does Round Robin differ from FCFS?")}
-                  className="w-full p-3 rounded-2xl bg-bg2 border border-line text-xs font-semibold hover:border-teal transition text-left"
+                  className="w-full p-3 rounded-xl bg-bg2 border border-line text-xs font-medium hover:border-indigo transition-colors text-left"
                 >
                   "How does Round Robin differ from FCFS?"
                 </button>
                 <button
                   onClick={() => handleSend("Who won the 2022 football World Cup?")}
-                  className="w-full p-3 rounded-2xl bg-bg2 border border-line text-xs font-semibold hover:border-amber transition text-left text-coral"
+                  className="w-full p-3 rounded-xl bg-bg2 border border-line text-xs font-medium hover:border-coral transition-colors text-left text-coral"
                 >
                   "Who won the 2022 football World Cup?" (Off-material refusal demo)
                 </button>
@@ -163,15 +160,15 @@ export default function ChatPage() {
               }`}
             >
               <div
-                className={`max-w-xl rounded-2xl p-4 text-sm space-y-3 ${
+                className={`max-w-xl rounded-2xl p-4 text-xs sm:text-sm space-y-3 ${
                   msg.role === 'user'
-                    ? 'bg-teal text-white rounded-br-none'
+                    ? 'bg-indigo text-white rounded-br-none font-medium'
                     : 'bg-bg2 border border-line rounded-bl-none text-ink'
                 }`}
               >
                 {!msg.grounded && msg.role === 'assistant' && (
-                  <div className="p-3 bg-amber/20 border border-amber/40 rounded-xl text-xs text-amber-900 dark:text-amber space-y-1">
-                    <div className="font-bold flex items-center gap-1">
+                  <div className="p-3 bg-amber/10 border border-amber/20 rounded-xl text-xs text-amber space-y-1">
+                    <div className="font-semibold flex items-center gap-1.5">
                       <AlertTriangle className="w-4 h-4 text-amber" /> Out-of-Domain Refusal
                     </div>
                     <p>{msg.content}</p>
@@ -182,21 +179,21 @@ export default function ChatPage() {
 
                 {/* Citation Chips */}
                 {msg.citations && msg.citations.length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2 border-t border-line/50">
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-line/60">
                     {msg.citations.map((c, i) => {
                       const isVideo = c.sourceType === 'video';
                       const isPdf = c.sourceType === 'pdf';
                       const chipColor = isVideo
-                        ? 'bg-coral text-white'
+                        ? 'bg-coral/10 text-coral border-coral/20'
                         : isPdf
-                        ? 'bg-teal text-white'
-                        : 'bg-amber text-ink';
+                        ? 'bg-teal/10 text-teal border-teal/20'
+                        : 'bg-amber/10 text-amber border-amber/20';
 
                       return (
                         <button
                           key={i}
                           onClick={() => setActiveCitation(c)}
-                          className={`text-xs font-bold px-2.5 py-1 rounded-full transition shadow-sm hover:opacity-90 ${chipColor}`}
+                          className={`text-xs font-semibold px-2.5 py-1 rounded-full border transition-all hover:opacity-90 ${chipColor}`}
                         >
                           {c.label}
                         </button>
@@ -205,11 +202,10 @@ export default function ChatPage() {
                   </div>
                 )}
 
-                {/* Outside Knowledge Block */}
                 {showOutsideKnowledge && msg.outsideKnowledge && (
-                  <div className="p-3 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-xs space-y-1">
-                    <span className="font-bold text-mut flex items-center gap-1">
-                      <Info className="w-3.5 h-3.5" /> Separated Outside Knowledge
+                  <div className="p-3 bg-card border border-line rounded-xl text-xs space-y-1">
+                    <span className="font-semibold text-mut flex items-center gap-1">
+                      <InfoIcon className="w-3.5 h-3.5 text-indigo" /> Separated Outside Knowledge
                     </span>
                     <p className="text-mut">{msg.outsideKnowledge}</p>
                   </div>
@@ -220,8 +216,8 @@ export default function ChatPage() {
         </div>
 
         {/* Input Bar */}
-        <div className="p-4 bg-bg2 border-t border-line flex items-center gap-2">
-          <button className="p-3 rounded-full bg-bg border border-line text-mut hover:text-ink transition">
+        <div className="p-3.5 bg-bg2 border-t border-line flex items-center gap-2">
+          <button className="p-2.5 rounded-lg bg-card border border-line text-mut hover:text-ink transition-colors">
             <Mic className="w-4 h-4" />
           </button>
           <input
@@ -232,11 +228,11 @@ export default function ChatPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            className="flex-1 p-3 rounded-full border border-line bg-bg text-sm focus:outline-none focus:ring-2 focus:ring-teal"
+            className="flex-1 p-2.5 rounded-lg border border-line bg-card text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo/20 text-ink"
           />
           <button
             onClick={() => handleSend()}
-            className="p-3 rounded-full bg-teal text-white font-bold hover:bg-teal/90 transition shadow-md"
+            className="p-2.5 rounded-lg btn-indigo font-semibold shadow-sm"
           >
             <Send className="w-4 h-4" />
           </button>
@@ -244,13 +240,13 @@ export default function ChatPage() {
       </div>
 
       {/* RIGHT PANE: Desktop Source Viewer */}
-      <div className="hidden md:block w-96">
+      <div className="hidden md:block w-80 lg:w-96">
         <SourceViewer citation={activeCitation} onClose={() => setActiveCitation(null)} />
       </div>
 
       {/* Mobile Bottom Sheet Source Viewer */}
       {activeCitation && (
-        <div className="fixed inset-x-0 bottom-0 z-50 md:hidden bg-bg rounded-t-3xl border-t border-line p-4 h-96 shadow-2xl">
+        <div className="fixed inset-x-0 bottom-0 z-50 md:hidden bg-card rounded-t-2xl border-t border-line p-4 h-96 shadow-2xl">
           <SourceViewer citation={activeCitation} onClose={() => setActiveCitation(null)} />
         </div>
       )}
