@@ -32,7 +32,7 @@ export const QuestionSchema = z.object({
   correctOptionIndex: z.number().optional(),
   correctAnswer: z.string().optional(),
   conceptId: z.string(),
-  difficulty: z.enum([1, 2, 3] as const),
+  difficulty: z.union([z.literal(1), z.literal(2), z.literal(3)]),
   source: CitationSchema,
   misconceptions: z.record(z.string(), z.string()).optional(),
 });
