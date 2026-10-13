@@ -174,19 +174,138 @@ H('#crit',[['Innovation','Cited answers plus an adaptive loop'],['Technical dept
 
 /* ---------- DEMO ---------- */
 const QA=[
-{q:"What are the four conditions for deadlock?",a:"Deadlock needs four conditions at once: mutual exclusion, hold and wait, no preemption and circular wait. Remove any one and deadlock cannot occur.",c:[
- {t:'v',l:'Lecture 7 · 14:32',p:62,x:"…remove any one of these four conditions and the system can never deadlock…"},
+{q:"What are the four conditions for deadlock?",a:"Deadlock can arise only if four necessary conditions hold simultaneously: mutual exclusion, hold and wait, no preemption, and circular wait [cite:b_p231] [cite:s_slide12]. Removing any single condition ensures that the system can never enter a deadlock state [cite:v_lec7_1432].",
+ jsonResponse: {
+   "abstained": false,
+   "concept_tested": "Deadlock Conditions",
+   "answer_markdown": "Deadlock can arise only if four necessary conditions hold simultaneously: mutual exclusion, hold and wait, no preemption, and circular wait [cite:b_p231] [cite:s_slide12]. Removing any single condition ensures that the system can never enter a deadlock state [cite:v_lec7_1432].",
+   "citations": [
+     {
+       "source_id": "cite:v_lec7_1432",
+       "modality": "video",
+       "display_label": "Lecture 7 · 14:32",
+       "seek_target": 872,
+       "page_number": null,
+       "slide_number": null,
+       "snippet_quote": "remove any one of these four conditions and the system can never deadlock"
+     },
+     {
+       "source_id": "cite:b_p231",
+       "modality": "pdf",
+       "display_label": "Textbook p.231",
+       "seek_target": null,
+       "page_number": 231,
+       "slide_number": null,
+       "snippet_quote": "Deadlock can arise only if mutual exclusion, hold and wait, no preemption and circular wait all hold at the same time."
+     },
+     {
+       "source_id": "cite:s_slide12",
+       "modality": "slide",
+       "display_label": "Slide 12",
+       "seek_target": null,
+       "page_number": null,
+       "slide_number": 12,
+       "snippet_quote": "Deadlock: necessary conditions - Mutual exclusion, Hold and wait, No preemption, Circular wait"
+     }
+   ],
+   "follow_up_socratic_prompt": "If a system allows preemption of resources, can a deadlock still occur? Why or why not?",
+   "concept_difficulty": "intermediate"
+ },
+ c:[
+ {t:'v',l:'Lecture 7 · 14:32',p:62,x:"remove any one of these four conditions and the system can never deadlock"},
  {t:'b',l:'Textbook p.231',x:"Deadlock can arise only if mutual exclusion, hold and wait, no preemption and circular wait all hold at the same time."},
  {t:'s',l:'Slide 12',h:'Deadlock: necessary conditions',x:['Mutual exclusion','Hold and wait','No preemption','Circular wait']}]},
-{q:"How does Round Robin differ from FCFS?",a:"Round Robin gives each process a fixed time quantum, then rotates, so short jobs wait less. With a very large quantum it degenerates into FCFS.",c:[
- {t:'v',l:'Lecture 4 · 08:10',p:35,x:"…with a huge quantum, round robin just behaves like first come, first served…"},
+{q:"How does Round Robin differ from FCFS?",a:"Round Robin scheduling assigns a fixed time quantum with preemptive rotation to processes [cite:s_slide7]. When the configured time quantum becomes exceptionally large, Round Robin degenerates and behaves identically to First-Come, First-Served (FCFS) [cite:v_lec4_0810] [cite:b_p96].",
+ jsonResponse: {
+   "abstained": false,
+   "concept_tested": "CPU Scheduling Algorithms",
+   "answer_markdown": "Round Robin scheduling assigns a fixed time quantum with preemptive rotation to processes [cite:s_slide7]. When the configured time quantum becomes exceptionally large, Round Robin degenerates and behaves identically to First-Come, First-Served (FCFS) [cite:v_lec4_0810] [cite:b_p96].",
+   "citations": [
+     {
+       "source_id": "cite:v_lec4_0810",
+       "modality": "video",
+       "display_label": "Lecture 4 · 08:10",
+       "seek_target": 490,
+       "page_number": null,
+       "slide_number": null,
+       "snippet_quote": "with a huge quantum, round robin just behaves like first come, first served"
+     },
+     {
+       "source_id": "cite:b_p96",
+       "modality": "pdf",
+       "display_label": "Textbook p.96",
+       "seek_target": null,
+       "page_number": 96,
+       "slide_number": null,
+       "snippet_quote": "A time quantum much larger than typical CPU bursts makes Round Robin behave like FCFS."
+     },
+     {
+       "source_id": "cite:s_slide7",
+       "modality": "slide",
+       "display_label": "Slide 7",
+       "seek_target": null,
+       "page_number": null,
+       "slide_number": 7,
+       "snippet_quote": "Round Robin - Fixed time quantum, Preemptive rotation, Large quantum -> FCFS"
+     }
+   ],
+   "follow_up_socratic_prompt": "What happens to the context switching overhead if the Round Robin time quantum is set extremely small?",
+   "concept_difficulty": "beginner"
+ },
+ c:[
+ {t:'v',l:'Lecture 4 · 08:10',p:35,x:"with a huge quantum, round robin just behaves like first come, first served"},
  {t:'b',l:'Textbook p.96',x:"A time quantum much larger than typical CPU bursts makes Round Robin behave like FCFS."},
  {t:'s',l:'Slide 7',h:'Round Robin',x:['Fixed time quantum','Preemptive rotation','Large quantum → FCFS']}]},
-{q:"What is Belady's anomaly?",a:"Under FIFO page replacement, adding more frames can sometimes increase page faults. Stack algorithms such as LRU never show this.",c:[
- {t:'v',l:'Lecture 9 · 21:45',p:78,x:"…more frames should mean fewer faults, but with FIFO that is not guaranteed…"},
+{q:"What is Belady's anomaly?",a:"Belady's anomaly is the phenomenon where allocating more page frames results in an increased number of page faults under FIFO page replacement [cite:v_lec9_2145] [cite:b_p341] [cite:s_slide18]. Stack algorithms such as LRU are mathematically proven never to suffer from Belady's anomaly [cite:s_slide18].",
+ jsonResponse: {
+   "abstained": false,
+   "concept_tested": "Page Replacement Algorithms",
+   "answer_markdown": "Belady's anomaly is the phenomenon where allocating more page frames results in an increased number of page faults under FIFO page replacement [cite:v_lec9_2145] [cite:b_p341] [cite:s_slide18]. Stack algorithms such as LRU are mathematically proven never to suffer from Belady's anomaly [cite:s_slide18].",
+   "citations": [
+     {
+       "source_id": "cite:v_lec9_2145",
+       "modality": "video",
+       "display_label": "Lecture 9 · 21:45",
+       "seek_target": 1305,
+       "page_number": null,
+       "slide_number": null,
+       "snippet_quote": "more frames should mean fewer faults, but with FIFO that is not guaranteed"
+     },
+     {
+       "source_id": "cite:b_p341",
+       "modality": "pdf",
+       "display_label": "Textbook p.341",
+       "seek_target": null,
+       "page_number": 341,
+       "slide_number": null,
+       "snippet_quote": "Belady's anomaly: under FIFO, a larger number of frames can produce more page faults."
+     },
+     {
+       "source_id": "cite:s_slide18",
+       "modality": "slide",
+       "display_label": "Slide 18",
+       "seek_target": null,
+       "page_number": null,
+       "slide_number": 18,
+       "snippet_quote": "Page replacement - FIFO can show the anomaly, LRU is a stack algorithm, Stack algorithms never do"
+     }
+   ],
+   "follow_up_socratic_prompt": "Why do stack algorithms like LRU guarantee that increasing frames will never increase page faults?",
+   "concept_difficulty": "advanced"
+ },
+ c:[
+ {t:'v',l:'Lecture 9 · 21:45',p:78,x:"more frames should mean fewer faults, but with FIFO that is not guaranteed"},
  {t:'b',l:'Textbook p.341',x:"Belady's anomaly: under FIFO, a larger number of frames can produce more page faults."},
  {t:'s',l:'Slide 18',h:'Page replacement',x:['FIFO can show the anomaly','LRU is a stack algorithm','Stack algorithms never do']}]},
-{q:"Who won the 2022 football World Cup?",a:null}];
+{q:"Who won the 2022 football World Cup?",a:null,
+ jsonResponse: {
+   "abstained": true,
+   "concept_tested": "General Knowledge / Out-of-Domain Query",
+   "answer_markdown": "I cannot answer this question because information about sports events and the 2022 football World Cup is not present in the retrieved course materials.",
+   "citations": [],
+   "follow_up_socratic_prompt": "Would you like to ask a question related to Operating Systems, such as deadlock, CPU scheduling, or memory management?",
+   "concept_difficulty": "beginner"
+ }}];
 
 function srcView(c){
   let b;
@@ -199,8 +318,8 @@ let qi=0,ci=-1;
 function drawAsk(){
   const it=QA[qi];
   let ans;
-  if(it.a===null)ans=`<div class="rounded-2xl border border-amber p-4"><b>I couldn't find this in your materials.</b><p class="mt-1 text-mut">Retrieval confidence was below the threshold, so the companion abstains instead of guessing.</p></div>`;
-  else ans=`<div class="rounded-2xl bg-bg p-4"><p>${it.a}</p><div class="mt-3 flex flex-wrap gap-2">${it.c.map((c,i)=>`<button class="pill ${CL[c.t]} ${i===ci?'ring-2 ring-ink':''}" data-c="${i}">${IC[c.t]} ${c.l}</button>`).join('')}</div></div>`;
+  if(it.a===null)ans=`<div class="rounded-2xl border border-amber p-4"><b>I couldn't find this in your materials.</b><p class="mt-1 text-mut">Retrieval confidence was below the threshold, so the companion abstains instead of guessing.</p><details class="mt-3 text-xs"><summary class="cursor-pointer font-bold text-teal">View Engine Output JSON</summary><pre class="mt-2 overflow-x-auto rounded bg-bg2 p-2 text-xs font-mono">${JSON.stringify(it.jsonResponse, null, 2)}</pre></details></div>`;
+  else ans=`<div class="rounded-2xl bg-bg p-4"><p>${it.a}</p><div class="mt-3 flex flex-wrap gap-2">${it.c.map((c,i)=>`<button class="pill ${CL[c.t]} ${i===ci?'ring-2 ring-ink':''}" data-c="${i}">${IC[c.t]} ${c.l}</button>`).join('')}</div><details class="mt-4 text-xs"><summary class="cursor-pointer font-bold text-teal">View Engine Output JSON (IIT Mandi Track D Standard)</summary><pre class="mt-2 overflow-x-auto rounded bg-bg2 p-2 text-xs font-mono">${JSON.stringify(it.jsonResponse, null, 2)}</pre></details></div>`;
   H('#panel',`<div class="flex flex-wrap gap-2">${QA.map((x,i)=>`<button data-q="${i}" class="pill border border-line ${i===qi?'bg-deep text-white':'bg-bg'}">${x.q}</button>`).join('')}</div>
   <div class="mt-4 grid gap-4 md:grid-cols-2"><div>${ans}</div><div class="rounded-2xl bg-bg p-4">${ci>=0&&it.a!==null?srcView(it.c[ci]):'<p class="text-mut">Click a citation chip to open the exact timestamp, page or slide.</p>'}</div></div>`);
   document.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{qi=+b.dataset.q;ci=-1;drawAsk()});
