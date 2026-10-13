@@ -1,10 +1,11 @@
 {
-  "name": "ai-study-companion",
+  "name": "study-companion",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test:build": "node scripts/test-build.js",
     "start": "next start",
     "lint": "next lint"
   },
