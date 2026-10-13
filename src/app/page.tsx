@@ -60,7 +60,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-xl">
-            Your personal learning companion helps you organize your study materials, understand difficult concepts with source proof, and build better learning habits.
+            Learn from your own materials with AI assistance and verifiable source citations.
           </p>
 
           {/* Two-Button CTA Row */}
@@ -82,40 +82,40 @@ export default function LandingPage() {
             </Link>
           </div>
 
-            {/* Metric Strip / Feature Badges */}
-            <div className="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-                <ShieldCheck className="w-4 h-4 text-teal-400 shrink-0" />
-                <div>
-                  <div className="font-bold text-white">Source-Grounded</div>
-                  <div className="text-[10px] text-slate-400">Verified Citations</div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-                <Activity className="w-4 h-4 text-indigo-400 shrink-0" />
-                <div>
-                  <div className="font-bold text-white">BKT Engine</div>
-                  <div className="text-[10px] text-slate-400">Adaptive Matrix</div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-                <Lock className="w-4 h-4 text-amber-400 shrink-0" />
-                <div>
-                  <div className="font-bold text-white">High Precision RAG</div>
-                  <div className="text-[10px] text-slate-400">Honest Abstention</div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-                <Layers className="w-4 h-4 text-violet-400 shrink-0" />
-                <div>
-                  <div className="font-bold text-white">Multimodal</div>
-                  <div className="text-[10px] text-slate-400">Video, PDF, Slide</div>
-                </div>
+          {/* Metric Strip / Feature Badges */}
+          <div className="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+              <ShieldCheck className="w-4 h-4 text-teal-400 shrink-0" />
+              <div>
+                <div className="font-bold text-white">Grounded Answers</div>
+                <div className="text-[10px] text-slate-400">Evidence-linked responses</div>
               </div>
             </div>
+
+            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+              <Activity className="w-4 h-4 text-indigo-400 shrink-0" />
+              <div>
+                <div className="font-bold text-white">BKT Engine</div>
+                <div className="text-[10px] text-slate-400">Adaptive review</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+              <Lock className="w-4 h-4 text-amber-400 shrink-0" />
+              <div>
+                <div className="font-bold text-white">Honest Abstention</div>
+                <div className="text-[10px] text-slate-400">When evidence is missing</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+              <Layers className="w-4 h-4 text-violet-400 shrink-0" />
+              <div>
+                <div className="font-bold text-white">Multimodal</div>
+                <div className="text-[10px] text-slate-400">Video, PDF, slides</div>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* HERO INTERACTIVE SHOWCASE CARD - Source Grounding Inspector */}
@@ -136,7 +136,7 @@ export default function LandingPage() {
                 <span className="ml-2 text-xs font-mono text-slate-400">Source Grounding Inspector</span>
               </div>
               <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold flex items-center gap-1">
-                <Check className="w-3 h-3" /> Verified Grounded
+                <Check className="w-3 h-3" /> Source-backed answer
               </span>
             </div>
 
@@ -183,7 +183,7 @@ export default function LandingPage() {
             <div className="p-4 rounded-xl bg-slate-950/80 border border-white/10 space-y-3">
               <div className="flex items-center justify-between text-xs text-slate-400">
                 <span className="font-semibold text-slate-200">Query: "What are Deadlock conditions?"</span>
-                <span className="text-[10px] font-mono text-cyan-400">RAG Confidence: 0.98</span>
+                <span className="text-[10px] font-mono text-cyan-400">Course evidence: 3 matched sources</span>
               </div>
 
               <p className="text-xs text-slate-200 leading-relaxed font-sans">
@@ -315,7 +315,6 @@ export default function LandingPage() {
           <div className="bg-slate-950 border border-white/10 rounded-2xl p-6 space-y-3 relative group hover:border-indigo-500/40 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono font-bold text-indigo-400">STEP 01</span>
-              <span className="w-7 h-7 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-xs font-mono font-bold text-indigo-300">01</span>
             </div>
             <h3 className="font-bold text-base text-white">Upload Course Material</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -327,7 +326,6 @@ export default function LandingPage() {
           <div className="bg-slate-950 border border-white/10 rounded-2xl p-6 space-y-3 relative group hover:border-teal-500/40 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono font-bold text-teal-400">STEP 02</span>
-              <span className="w-7 h-7 rounded-full bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-xs font-mono font-bold text-teal-300">02</span>
             </div>
             <h3 className="font-bold text-base text-white">Ask &amp; Verify Proof</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -339,7 +337,6 @@ export default function LandingPage() {
           <div className="bg-slate-950 border border-white/10 rounded-2xl p-6 space-y-3 relative group hover:border-amber-500/40 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono font-bold text-amber-400">STEP 03</span>
-              <span className="w-7 h-7 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xs font-mono font-bold text-amber-300">03</span>
             </div>
             <h3 className="font-bold text-base text-white">Master Concepts</h3>
             <p className="text-xs text-slate-400 leading-relaxed">

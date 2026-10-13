@@ -40,7 +40,7 @@ export function SourceViewer({ citation, onClose }: SourceViewerProps) {
           </span>
           <div>
             <h4 className="font-bold text-xs text-ink">{citation.label}</h4>
-            <span className="text-[10px] text-mut uppercase font-semibold">Verified Grounded Source</span>
+            <span className="text-[10px] text-mut uppercase font-semibold">Retrieved source</span>
           </div>
         </div>
         {onClose && (

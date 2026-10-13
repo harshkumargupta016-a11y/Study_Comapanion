@@ -221,7 +221,7 @@ export async function getEvalResults(): Promise<{ recallAtK: number; citationAcc
   if (USE_MOCK) {
     return {
       recallAtK: 0.92,
-      citationAccuracy: 0.98,
+      citationAccuracy: 0.74,
       ragasScore: 0.89,
     };
   }
