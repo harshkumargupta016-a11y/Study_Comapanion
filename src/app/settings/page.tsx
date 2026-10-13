@@ -7,12 +7,12 @@ import { useChatStore } from '@/store/chatStore';
 import { Trash2, CheckCircle2 } from 'lucide-react';
 
 export default function SettingsPage() {
-  const { setMasteryPoints } = useMasteryStore();
+  const { resetMastery } = useMasteryStore();
   const { clearChat } = useChatStore();
   const [cleared, setCleared] = useState(false);
 
   const handleResetData = () => {
-    setMasteryPoints([]);
+    resetMastery();
     clearChat();
     setCleared(true);
     setTimeout(() => setCleared(false), 3000);

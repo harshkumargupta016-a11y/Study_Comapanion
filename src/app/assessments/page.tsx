@@ -65,38 +65,45 @@ export default function AssessmentsPage() {
     setMode('runner');
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmitAnswer = async () => {
-    if (!currentQuestion || selectedAnswer === null) return;
+    if (!currentQuestion || selectedAnswer === null || isSubmitting) return;
 
-    const res = await submitAssessment(currentQuestion.id, selectedAnswer);
+    setIsSubmitting(true);
+    try {
+      const res = await submitAssessment(currentQuestion.id, selectedAnswer);
 
-    setMasteryPoints(
-      masteryPoints.map((m) => {
-        if (m.conceptId === currentQuestion.conceptId) {
-          return {
-            ...m,
-            pKnown: updateBKT(m.pKnown, res.correct),
-            nObs: m.nObs + 1,
-          };
-        }
-        return m;
-      })
-    );
+      setMasteryPoints(
+        masteryPoints.map((m) => {
+          if (m.conceptId === currentQuestion.conceptId) {
+            return {
+              ...m,
+              pKnown: updateBKT(m.pKnown, res.correct),
+              nObs: m.nObs + 1,
+            };
+          }
+          return m;
+        })
+      );
 
-    setResults((prev) => [
-      ...prev,
-      {
-        question: currentQuestion,
-        userAnswer: selectedAnswer,
-        correct: res.correct,
-        misconception: res.misconception,
-      },
-    ]);
+      setResults((prev) => [
+        ...prev,
+        {
+          question: currentQuestion,
+          userAnswer: selectedAnswer,
+          correct: res.correct,
+          misconception: res.misconception,
+        },
+      ]);
 
-    if (examType === 'quiz') {
-      setFeedback(res);
-    } else {
-      handleNextQuestion();
+      if (examType === 'quiz') {
+        setFeedback(res);
+      } else {
+        handleNextQuestion();
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -256,10 +263,10 @@ export default function AssessmentsPage() {
             {!feedback ? (
               <button
                 onClick={handleSubmitAnswer}
-                disabled={selectedAnswer === null}
+                disabled={selectedAnswer === null || isSubmitting}
                 className="w-full py-2.5 rounded-lg btn-indigo font-semibold text-xs flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
               >
-                Submit Answer <ArrowRight className="w-4 h-4" />
+                {isSubmitting ? 'Evaluating...' : 'Submit Answer'} <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
               <div className="space-y-4 pt-4 border-t border-line">
@@ -346,14 +353,20 @@ export default function AssessmentsPage() {
             </div>
           )}
 
-          <div className="flex justify-center gap-3 pt-4 border-t border-line">
-            <button
-              onClick={() => setMode('builder')}
-              className="py-2.5 px-5 rounded-lg border border-line font-semibold text-xs text-ink hover:bg-bg2 transition-colors flex items-center gap-1.5"
-            >
-              <RotateCcw className="w-3.5 h-3.5" /> Configure New Assessment
-            </button>
-          </div>
+              <div className="flex justify-center gap-3 pt-4 border-t border-line">
+                <button
+                  onClick={() => setMode('builder')}
+                  className="py-2.5 px-5 rounded-lg border border-line font-semibold text-xs text-ink hover:bg-bg2 transition-colors flex items-center gap-1.5"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" /> Configure New Assessment
+                </button>
+                <Link
+                  href="/mastery"
+                  className="py-2.5 px-5 rounded-lg btn-indigo font-semibold text-xs text-white flex items-center gap-1.5 shadow-sm"
+                >
+                  View Updated Mastery <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
         </div>
       )}
     </div>

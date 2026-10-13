@@ -82,40 +82,40 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          {/* Metric Strip / Feature Badges */}
-          <div className="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-              <ShieldCheck className="w-4 h-4 text-teal-400 shrink-0" />
-              <div>
-                <div className="font-bold text-white">100% Grounded</div>
-                <div className="text-[10px] text-slate-400">Verified Citations</div>
+            {/* Metric Strip / Feature Badges */}
+            <div className="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                <ShieldCheck className="w-4 h-4 text-teal-400 shrink-0" />
+                <div>
+                  <div className="font-bold text-white">Source-Grounded</div>
+                  <div className="text-[10px] text-slate-400">Verified Citations</div>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-              <Activity className="w-4 h-4 text-indigo-400 shrink-0" />
-              <div>
-                <div className="font-bold text-white">BKT Engine</div>
-                <div className="text-[10px] text-slate-400">Adaptive Matrix</div>
+              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                <Activity className="w-4 h-4 text-indigo-400 shrink-0" />
+                <div>
+                  <div className="font-bold text-white">BKT Engine</div>
+                  <div className="text-[10px] text-slate-400">Adaptive Matrix</div>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-              <Lock className="w-4 h-4 text-amber-400 shrink-0" />
-              <div>
-                <div className="font-bold text-white">0% Hallucination</div>
-                <div className="text-[10px] text-slate-400">Honest Abstention</div>
+              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                <Lock className="w-4 h-4 text-amber-400 shrink-0" />
+                <div>
+                  <div className="font-bold text-white">High Precision RAG</div>
+                  <div className="text-[10px] text-slate-400">Honest Abstention</div>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
-              <Layers className="w-4 h-4 text-violet-400 shrink-0" />
-              <div>
-                <div className="font-bold text-white">Multimodal</div>
-                <div className="text-[10px] text-slate-400">Video, PDF, Slide</div>
+              <div className="flex items-center gap-2 bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                <Layers className="w-4 h-4 text-violet-400 shrink-0" />
+                <div>
+                  <div className="font-bold text-white">Multimodal</div>
+                  <div className="text-[10px] text-slate-400">Video, PDF, Slide</div>
+                </div>
               </div>
             </div>
-          </div>
         </motion.div>
 
         {/* HERO INTERACTIVE SHOWCASE CARD - Source Grounding Inspector */}

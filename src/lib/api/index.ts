@@ -71,7 +71,7 @@ export async function getKnowledgeUnit(id: string) {
   return res.json();
 }
 
-export async function sendChatMessage(content: string): Promise<Message> {
+export async function sendChatMessage(content: string, socratic: boolean = false): Promise<Message> {
   if (USE_MOCK) {
     const isOffMaterial = MOCK_OFF_MATERIAL_QUESTIONS.some((q) =>
       content.toLowerCase().includes(q.toLowerCase())
@@ -82,7 +82,7 @@ export async function sendChatMessage(content: string): Promise<Message> {
         id: `msg-${Date.now()}`,
         role: 'assistant',
         content:
-          'I am instructed to rely exclusively on the provided course material. I cannot answer this query as it falls outside the retrieved knowledge base context.',
+          'I am instructed to rely strictly on your uploaded course materials. I cannot answer this query as it falls outside the retrieved knowledge base context.',
         citations: [],
         grounded: false,
         outsideKnowledge: 'Sports / General Knowledge domain',
@@ -95,13 +95,21 @@ export async function sendChatMessage(content: string): Promise<Message> {
     );
 
     if (matched) {
-      return MessageSchema.parse(matched.assistantMessage);
+      const msg = { ...matched.assistantMessage };
+      if (socratic) {
+        msg.content = `[Socratic Guide] Consider how these concepts interact: ${msg.content} What do you think happens if one of these conditions is violated?`;
+      }
+      return MessageSchema.parse(msg);
     }
+
+    const replyText = socratic
+      ? `[Socratic Guide] Regarding "${content}": The operating system materials state that process states and synchronization primitives strictly ensure system consistency [cite:b_p231]. How would you apply this to prevent resource contention?`
+      : `Regarding your query on "${content}": The operating systems course materials state that process states and synchronization primitives strictly ensure system consistency [cite:b_p231].`;
 
     return MessageSchema.parse({
       id: `msg-${Date.now()}`,
       role: 'assistant',
-      content: `Regarding your query on "${content}": The operating systems course materials state that process states and synchronization primitives strictly ensure system consistency [cite:b_p231].`,
+      content: replyText,
       citations: [MOCK_UNITS[0].citation],
       grounded: true,
       timestamp: new Date().toISOString(),
@@ -111,7 +119,7 @@ export async function sendChatMessage(content: string): Promise<Message> {
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content }),
+    body: JSON.stringify({ content, socratic }),
   });
   return res.json();
 }

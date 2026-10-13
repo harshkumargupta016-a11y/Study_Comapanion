@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { getKnowledgeGraph, getLearnerMastery } from '@/lib/api';
 import { ConceptNode, MasteryPoint } from '@/lib/schemas';
-import { ExternalLink, X, BookOpen } from 'lucide-react';
+import { useMasteryStore } from '@/store/masteryStore';
+import { ExternalLink, X, BookOpen, MessageSquare, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export default function KnowledgeMapPage() {
+  const { masteryPoints: storePoints } = useMasteryStore();
   const [concepts, setConcepts] = useState<ConceptNode[]>([]);
   const [mastery, setMastery] = useState<MasteryPoint[]>([]);
   const [selectedNode, setSelectedNode] = useState<ConceptNode | null>(null);
@@ -13,16 +16,20 @@ export default function KnowledgeMapPage() {
   useEffect(() => {
     Promise.all([getKnowledgeGraph(), getLearnerMastery()]).then(([c, m]) => {
       setConcepts(c);
-      setMastery(m);
+      if (storePoints && storePoints.length > 0) {
+        setMastery(storePoints);
+      } else {
+        setMastery(m);
+      }
     });
-  }, []);
+  }, [storePoints]);
 
   const getMasteryColor = (conceptId: string) => {
     const m = mastery.find((item) => item.conceptId === conceptId);
-    if (!m || m.nObs === 0) return 'bg-bg2 text-mut border-line';
-    if (m.pKnown >= 0.75) return 'bg-teal/10 text-teal border-teal/30';
-    if (m.pKnown >= 0.4) return 'bg-amber/10 text-amber border-amber/30';
-    return 'bg-coral/10 text-coral border-coral/30';
+    if (!m || m.nObs === 0) return 'bg-[#141d33] text-slate-300 border-white/10 hover:border-indigo-500/30';
+    if (m.pKnown >= 0.75) return 'bg-teal/10 text-teal border-teal/30 hover:border-teal/50';
+    if (m.pKnown >= 0.4) return 'bg-amber/10 text-amber border-amber/30 hover:border-amber/50';
+    return 'bg-coral/10 text-coral border-coral/30 hover:border-coral/50';
   };
 
   return (
@@ -41,7 +48,7 @@ export default function KnowledgeMapPage() {
         <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-teal" /> High Mastery (&ge;75%)</span>
         <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-amber" /> Moderate Mastery (40-74%)</span>
         <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-coral" /> Needs Practice (&lt;40%)</span>
-        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-slate-400" /> Untested</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-slate-500" /> Untested</span>
       </div>
 
       {/* Concept Grid Map */}
@@ -78,7 +85,7 @@ export default function KnowledgeMapPage() {
 
       {/* Side Drawer */}
       {selectedNode && (
-        <div className="fixed inset-0 bg-black/40 z-50 flex justify-end backdrop-blur-xs">
+        <div className="fixed inset-0 bg-black/60 z-50 flex justify-end backdrop-blur-xs">
           <div className="w-full max-w-md bg-card h-full p-6 space-y-6 overflow-y-auto shadow-2xl border-l border-line">
             <div className="flex items-center justify-between border-b border-line pb-4">
               <h2 className="font-bold text-base text-ink">{selectedNode.name}</h2>
@@ -94,6 +101,30 @@ export default function KnowledgeMapPage() {
               <div>
                 <h4 className="text-[10px] font-bold text-mut uppercase tracking-wider mb-1">Description</h4>
                 <p className="text-ink leading-relaxed">{selectedNode.description}</p>
+              </div>
+
+              <div>
+                <h4 className="text-[10px] font-bold text-mut uppercase tracking-wider mb-2">Next Recommended Actions</h4>
+                <div className="grid gap-2">
+                  <Link
+                    href="/chat"
+                    className="p-3 rounded-xl bg-indigo/10 border border-indigo/20 text-indigo font-semibold flex items-center justify-between hover:bg-indigo/20 transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4" /> Discuss in Tutor Chat
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                  <Link
+                    href="/assessments"
+                    className="p-3 rounded-xl bg-teal/10 border border-teal/20 text-teal font-semibold flex items-center justify-between hover:bg-teal/20 transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4" /> Test Concept Knowledge
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
 
               <div>

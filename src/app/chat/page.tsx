@@ -48,7 +48,7 @@ export default function ChatPage() {
     addMessage(userMsg);
     if (!overrideText) setInput('');
 
-    const assistantMsg = await sendChatMessage(query);
+    const assistantMsg = await sendChatMessage(query, socraticMode);
 
     let currentContent = '';
     const fullText = assistantMsg.content;
